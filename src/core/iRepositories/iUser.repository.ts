@@ -5,7 +5,7 @@ import { TeamMembers } from "../entities/team_members";
 import { IBaseRepository } from "./base/iBase.repository";
 
 export interface IUserRepository extends IBaseRepository<User, string> {
-    getByProjectId(projectId: string): Promise<ProjectMembers>;
-    getByTaskId(taskId: string): Promise<TaskMembers>;
-    getByTeamId(teamId: string): Promise<TeamMembers>;
+    getAllByProjectId(projectId: string): Promise<ProjectMembers>;
+    getAllByTaskId(taskId: string): Promise<TaskMembers>;
+    getAllByTeamId(teamId: string): Promise<TeamMembers>;
 }

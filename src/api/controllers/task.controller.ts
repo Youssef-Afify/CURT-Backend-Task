@@ -28,13 +28,13 @@ export class TaskController implements ITaskController {
         res.status(204).send();
     }
 
-    async getByUserId(req: Request, res: Response, _next: NextFunction): Promise<void> {
-        const userTasks = await this.taskService.getByUserId(req.params.id);
+    async getAllByUserId(req: Request, res: Response, _next: NextFunction): Promise<void> {
+        const userTasks = await this.taskService.getAllByUserId(req.params.id);
         res.status(200).json(userTasks);
     }
 
-    async getByProjectId(req: Request, res: Response, _next: NextFunction): Promise<void> {
-        const projectTasks = await this.taskService.getByProjectId(req.params.id);
+    async getAllByProjectId(req: Request, res: Response, _next: NextFunction): Promise<void> {
+        const projectTasks = await this.taskService.getAllByProjectId(req.params.id);
         res.status(200).json(projectTasks);
     }
 }

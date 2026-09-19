@@ -7,7 +7,7 @@ export interface ICreateRepository<TEntity> {
 }
 
 export interface IReadRepository<TEntity, TId> {
-    findById(id: TId): Promise<TEntity | null>;
+    getById(id: TId): Promise<TEntity | null>;
 }
 
 export interface IUpdateRepository<TEntity, TId> {

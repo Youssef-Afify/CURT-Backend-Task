@@ -28,13 +28,13 @@ export class ProjectController implements IProjectController {
         res.status(204).send();
     }
 
-    async getByUserId(req: Request, res: Response, _next: NextFunction): Promise<void> {
-        const userProjects = await this.projectService.getByUserId(req.params.id);
+    async getAllByUserId(req: Request, res: Response, _next: NextFunction): Promise<void> {
+        const userProjects = await this.projectService.getAllByUserId(req.params.id);
         res.status(200).json(userProjects);
     }
 
-    async getByCreatorId(req: Request, res: Response, _next: NextFunction): Promise<void> {
-        const userProjects = await this.projectService.getByCreatorId(req.params.id);
-        res.status(200).json(userProjects);
+    async getAllByCreatorId(req: Request, res: Response, _next: NextFunction): Promise<void> {
+        const creatorProjects = await this.projectService.getAllByCreatorId(req.params.id);
+        res.status(200).json(creatorProjects);
     }
 }

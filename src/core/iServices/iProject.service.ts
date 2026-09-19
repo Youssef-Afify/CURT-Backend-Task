@@ -4,6 +4,6 @@ import { UserProjects } from "../entities/user_projects";
 import { ICrudService } from "./base/iCrud.service";
 
 export interface IProjectService extends ICrudService<Project, string, CreateProjectDto, UpdateProjectDto> {
-    getByUserId(userId: string): Promise<UserProjects>;
-    getByCreatorId(creatorId: string): Promise<UserProjects>;
+    getAllByUserId(userId: string): Promise<UserProjects>;
+    getAllByCreatorId(creatorId: string): Promise<UserProjects>;
 }

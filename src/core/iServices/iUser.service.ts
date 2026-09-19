@@ -6,7 +6,7 @@ import { TeamMembers } from "../entities/team_members";
 import { ICrudService } from "./base/iCrud.service";
 
 export interface IUserService extends ICrudService<User, string, CreateUserDto, UpdateUserDto> {
-    getByProjectId(projectId: string): Promise<ProjectMembers>;
-    getByTaskId(taskId: string): Promise<TaskMembers>;
-    getByTeamId(teamId: string): Promise<TeamMembers>;
+    getAllByProjectId(projectId: string): Promise<ProjectMembers>;
+    getAllByTaskId(taskId: string): Promise<TaskMembers>;
+    getAllByTeamId(teamId: string): Promise<TeamMembers>;
 }

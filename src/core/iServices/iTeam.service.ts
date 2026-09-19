@@ -4,6 +4,6 @@ import { UserTeams } from "../entities/user_teams";
 import { ICrudService } from "./base/iCrud.service";
 
 export interface ITeamService extends ICrudService<Team, string, CreateTeamDto, UpdateTeamDto> {
-    getByUserId(userId: string): Promise<UserTeams>;
-    getByCreatorId(creatorId: string): Promise<UserTeams>;
+    getAllByUserId(userId: string): Promise<UserTeams>;
+    getAllByCreatorId(creatorId: string): Promise<UserTeams>;
 }

@@ -28,18 +28,18 @@ export class UserController implements IUserController {
         res.status(204).send();
     }
 
-    async getByProjectId(req: Request, res: Response, _next: NextFunction): Promise<void> {
-        const projectMembers = await this.userService.getByProjectId(req.params.id);
+    async getAllByProjectId(req: Request, res: Response, _next: NextFunction): Promise<void> {
+        const projectMembers = await this.userService.getAllByProjectId(req.params.id);
         res.status(200).json(projectMembers);
     }
 
-    async getByTaskId(req: Request, res: Response, _next: NextFunction): Promise<void> {
-        const taskMembers = await this.userService.getByTaskId(req.params.id);
+    async getAllByTaskId(req: Request, res: Response, _next: NextFunction): Promise<void> {
+        const taskMembers = await this.userService.getAllByTaskId(req.params.id);
         res.status(200).json(taskMembers);
     }
 
-    async getByTeamId(req: Request, res: Response, _next: NextFunction): Promise<void> {
-        const teamMembers = await this.userService.getByTeamId(req.params.id);
+    async getAllByTeamId(req: Request, res: Response, _next: NextFunction): Promise<void> {
+        const teamMembers = await this.userService.getAllByTeamId(req.params.id);
         res.status(200).json(teamMembers);
     }
 }
