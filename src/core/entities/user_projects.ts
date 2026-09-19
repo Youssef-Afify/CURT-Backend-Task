@@ -12,10 +12,7 @@ export class UserProjects {
     ) {}
 
     static toEntity(row: UserProjectsRow): UserProjects {
-        return new UserProjects(
-            row.user_id,
-            row.projects,
-        );
+        return new UserProjects(row.user_id, row.projects);
     }
 
     static toEntities(rows: UserProjectsRow[]): UserProjects[] {

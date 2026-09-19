@@ -1,4 +1,4 @@
-export  type Progress = "To Do" | "In Progress" | "Done";
+export type Progress = "To Do" | "In Progress" | "Done";
 
 export interface ProjectRow {
     project_id: string;

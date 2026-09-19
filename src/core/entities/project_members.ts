@@ -12,10 +12,7 @@ export class ProjectMembers {
     ) {}
 
     static toEntity(row: ProjectMembersRow): ProjectMembers {
-        return new ProjectMembers(
-            row.project_id,
-            row.members,
-        )
+        return new ProjectMembers(row.project_id, row.members);
     }
 
     static toEntities(rows: ProjectMembersRow[]): ProjectMembers[] {
