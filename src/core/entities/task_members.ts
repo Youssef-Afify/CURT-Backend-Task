@@ -1,21 +1,21 @@
 import { UserRow } from "./user";
 
-export interface TeamMembersRow {
-    team_id: string;
+export interface TaskMembersRow {
+    task_id: string;
     members: UserRow[];
 }
 
-export class TeamMembers {
+export class TaskMembers {
     constructor(
-        public readonly teamId: string,
+        public readonly taskId: string,
         public members: UserRow[],
     ) {}
 
-    static toEntity(row: TeamMembersRow): TeamMembers {
-        return new TeamMembers(row.team_id, row.members);
+    static toEntity(row: TaskMembersRow): TaskMembers {
+        return new TaskMembers(row.task_id, row.members);
     }
 
-    static toEntities(rows: TeamMembersRow[]): TeamMembers[] {
-        return rows.map(TeamMembers.toEntity);
+    static toEntities(rows: TaskMembersRow[]): TaskMembers[] {
+        return rows.map(TaskMembers.toEntity);
     }
 }
