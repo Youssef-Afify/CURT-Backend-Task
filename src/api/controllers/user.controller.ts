@@ -29,17 +29,17 @@ export class UserController implements IUserController {
     }
 
     async getAllByProjectId(req: Request, res: Response, _next: NextFunction): Promise<void> {
-        const projectMembers = await this.userService.getAllByProjectId(req.params.id);
+        const projectMembers = await this.userService.getAllByProjectId(req.params.project_id);
         res.status(200).json(projectMembers);
     }
 
     async getAllByTaskId(req: Request, res: Response, _next: NextFunction): Promise<void> {
-        const taskMembers = await this.userService.getAllByTaskId(req.params.id);
+        const taskMembers = await this.userService.getAllByTaskId(req.params.task_id);
         res.status(200).json(taskMembers);
     }
 
     async getAllByTeamId(req: Request, res: Response, _next: NextFunction): Promise<void> {
-        const teamMembers = await this.userService.getAllByTeamId(req.params.id);
+        const teamMembers = await this.userService.getAllByTeamId(req.params.team_id);
         res.status(200).json(teamMembers);
     }
 }

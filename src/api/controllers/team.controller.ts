@@ -29,12 +29,12 @@ export class TeamController implements ITeamController {
     }
 
     async getAllByUserId(req: Request, res: Response, _next: NextFunction): Promise<void> {
-        const userTeams = await this.teamService.getAllByUserId(req.params.id);
+        const userTeams = await this.teamService.getAllByUserId(req.params.user_id);
         res.status(200).json(userTeams);
     }
 
     async getAllByCreatorId(req: Request, res: Response, _next: NextFunction): Promise<void> {
-        const creatorTeams = await this.teamService.getAllByCreatorId(req.params.id);
+        const creatorTeams = await this.teamService.getAllByCreatorId(req.params.creator_id);
         res.status(200).json(creatorTeams);
     }
 }
