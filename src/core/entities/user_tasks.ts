@@ -1,21 +1,12 @@
-import { TaskRow } from "./task";
-
-export interface UserTasksRow {
-    user_id: string;
-    tasks: TaskRow[];
-}
+import { Task, TaskRow } from "./task";
 
 export class UserTasks {
     constructor(
         public readonly userId: string,
-        public tasks: TaskRow[],
+        public tasks: Task[],
     ) {}
 
-    static toEntity(row: UserTasksRow): UserTasks {
-        return new UserTasks(row.user_id, row.tasks);
-    }
-
-    static toEntities(rows: UserTasksRow[]): UserTasks[] {
-        return rows.map(UserTasks.toEntity);
+    static toEntity(userId: string, rows: TaskRow[]): UserTasks {
+        return new UserTasks(userId, Task.toEntities(rows));
     }
 }

@@ -14,9 +14,9 @@ export class ProjectService implements IProjectService {
 
     async create(dto: CreateProjectDto): Promise<Project> {
         const project = await this.projectRepository.create({
-            // creatorId: creatorId
             name: dto.name,
             description: dto.description,
+            // creatorId: creatorId
         });
         return project;
     }

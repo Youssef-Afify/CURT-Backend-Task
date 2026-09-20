@@ -14,9 +14,9 @@ export class TeamService implements ITeamService {
 
     async create(dto: CreateTeamDto): Promise<Team> {
         const team = await this.teamRepository.create({
-            // creatorId: creatorId
             name: dto.name,
             description: dto.description,
+            // creatorId: creatorId
         });
         return team;
     }
@@ -55,7 +55,7 @@ export class TeamService implements ITeamService {
         return userTeams;
     }
 
-    async getAllByCreatorId(creatorId: string): Promise<UserTeams> {
+    async getAllByCreatorId(creatorId: string): Promise<Team[]> {
         const creatorTeams = await this.teamRepository.getAllByCreatorId(creatorId);
         return creatorTeams;
     }

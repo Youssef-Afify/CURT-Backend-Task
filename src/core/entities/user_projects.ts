@@ -1,21 +1,12 @@
-import { ProjectRow } from "./project";
-
-export interface UserProjectsRow {
-    user_id: string;
-    projects: ProjectRow[];
-}
+import { Project, ProjectRow } from "./project";
 
 export class UserProjects {
     constructor(
-        public readonly user_id: string,
-        public projects: ProjectRow[],
+        public readonly userId: string,
+        public projects: Project[],
     ) {}
 
-    static toEntity(row: UserProjectsRow): UserProjects {
-        return new UserProjects(row.user_id, row.projects);
-    }
-
-    static toEntities(rows: UserProjectsRow[]): UserProjects[] {
-        return rows.map(UserProjects.toEntity);
+    static toEntity(userId: string, rows: ProjectRow[]): UserProjects {
+        return new UserProjects(userId, Project.toEntities(rows));
     }
 }

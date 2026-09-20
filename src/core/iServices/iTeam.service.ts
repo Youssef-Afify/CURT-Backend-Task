@@ -5,5 +5,5 @@ import { ICrudService } from "./base/iCrud.service";
 
 export interface ITeamService extends ICrudService<Team, string, CreateTeamDto, UpdateTeamDto> {
     getAllByUserId(userId: string): Promise<UserTeams>;
-    getAllByCreatorId(creatorId: string): Promise<UserTeams>;
+    getAllByCreatorId(creatorId: string): Promise<Team[]>;
 }
