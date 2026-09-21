@@ -6,4 +6,4 @@ const app = createApp();
 
 app.listen(PORT, () => {
     console.log(`Server API listening on port ${PORT}`);
-})
+});

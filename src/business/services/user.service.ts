@@ -3,10 +3,11 @@ import { User } from "../../core/entities/user";
 import { ProjectMembers } from "../../core/entities/project_members";
 import { TaskMembers } from "../../core/entities/task_members";
 import { TeamMembers } from "../../core/entities/team_members";
-import { NotFoundError } from "../../core/errors/appError";
+import { NotFoundError, UnauthorizedError } from "../../core/errors/appError";
 import { IBaseLogger } from "../../core/iLoggers/iBaseLogger";
 import { IUserRepository } from "../../core/iRepositories/iUser.repository";
 import { IUserService } from "../../core/iServices/iUser.service";
+import { requireCurrentUserId } from "../contextVars/user.context";
 
 export class UserService implements IUserService {
     constructor(
@@ -33,6 +34,11 @@ export class UserService implements IUserService {
     }
 
     async update(id: string, dto: UpdateUserDto): Promise<User> {
+        const userId = requireCurrentUserId();
+        if (userId !== id) {
+            throw new UnauthorizedError("Not authorized to update the info of another user");
+        }
+
         const updated = await this.userRepository.update(id, {
             name: dto.name,
         });
@@ -44,6 +50,11 @@ export class UserService implements IUserService {
     }
 
     async delete(id: string): Promise<void> {
+        const userId = requireCurrentUserId();
+        if (userId !== id) {
+            throw new UnauthorizedError("Not authorized to delete another user");
+        }
+
         const deleted = await this.userRepository.delete(id);
         if (!deleted) {
             this.logger.error(`User ${id} not found`);

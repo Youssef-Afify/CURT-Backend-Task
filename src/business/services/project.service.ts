@@ -1,10 +1,11 @@
 import { CreateProjectDto, UpdateProjectDto } from "../../core/dtos/project.dto";
 import { Project } from "../../core/entities/project";
 import { UserProjects } from "../../core/entities/user_projects";
-import { NotFoundError } from "../../core/errors/appError";
+import { ForbiddenError, NotFoundError } from "../../core/errors/appError";
 import { IBaseLogger } from "../../core/iLoggers/iBaseLogger";
 import { IProjectRepository } from "../../core/iRepositories/iProject.repository";
 import { IProjectService } from "../../core/iServices/iProject.service";
+import { requireCurrentUserId } from "../contextVars/user.context";
 
 export class ProjectService implements IProjectService {
     constructor(
@@ -13,10 +14,12 @@ export class ProjectService implements IProjectService {
     ) {}
 
     async create(dto: CreateProjectDto): Promise<Project> {
+        const creatorId = requireCurrentUserId();
+
         const project = await this.projectRepository.create({
             name: dto.name,
             description: dto.description,
-            // creatorId: creatorId
+            creatorId: creatorId,
         });
         return project;
     }
@@ -31,6 +34,12 @@ export class ProjectService implements IProjectService {
     }
 
     async update(id: string, dto: UpdateProjectDto): Promise<Project> {
+        const creatorId = requireCurrentUserId();
+        const existing = await this.getById(id);
+        if (existing.creatorId !== creatorId) {
+            throw new ForbiddenError("Only the project's creator can update it")
+        }
+
         const updated = await this.projectRepository.update(id, {
             name: dto.name,
             description: dto.description,
@@ -44,6 +53,12 @@ export class ProjectService implements IProjectService {
     }
 
     async delete(id: string): Promise<void> {
+        const creatorId = requireCurrentUserId();
+        const existing = await this.getById(id);
+        if (existing.creatorId !== creatorId) {
+            throw new ForbiddenError("Only the project's creator can delete it")
+        }
+
         const deleted = await this.projectRepository.delete(id);
         if (!deleted) {
             this.logger.error(`Project ${id} not found`);
@@ -56,7 +71,7 @@ export class ProjectService implements IProjectService {
         return userProjects;
     }
 
-    async getAllByCreatorId(creatorId: string): Promise<UserProjects> {
+    async getAllByCreatorId(creatorId: string): Promise<Project[]> {
         const creatorProjects = await this.projectRepository.getAllByCreatorId(creatorId);
         return creatorProjects;
     }

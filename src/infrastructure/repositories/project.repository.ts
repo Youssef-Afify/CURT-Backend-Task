@@ -15,7 +15,7 @@ export class ProjectRepository
     async create(data: Partial<Project>): Promise<Project> {
         const rows = await this.query<ProjectRow>(
             `INSERT INTO projects (name, description, progress, creator_id)
-            VALUES ($1, $2, "To Do", $3)
+            VALUES ($1, $2, 'To Do', $3)
             RETURNING project_id, name, description, progress, created_at, updated_at, creator_id`,
             [data.name, data.description, data.creatorId],
         );
@@ -86,7 +86,7 @@ export class ProjectRepository
         return new UserProjects(userId, Project.toEntities(rows));
     }
 
-    async getAllByCreatorId(creatorId: string): Promise<UserProjects> {
+    async getAllByCreatorId(creatorId: string): Promise<Project[]> {
         const rows = await this.query<ProjectRow>(
             `SELECT project_id, name, description, progress, created_at, updated_at, creator_id
             FROM projects
@@ -95,6 +95,6 @@ export class ProjectRepository
             [creatorId],
         );
 
-        return new UserProjects(creatorId, Project.toEntities(rows));
+        return Project.toEntities(rows);
     }
 }

@@ -5,10 +5,13 @@ import { taskRoutes } from "./api/routes/task.route";
 import { teamRoutes } from "./api/routes/team.route";
 import { userRoutes } from "./api/routes/user.route";
 import { errorMiddleware } from "./api/middlewares/errorMiddleware";
+import { authRoutes } from "./api/routes/auth.route";
 
 export function createApp(): Express {
     const app = express();
     const {
+        authMiddleware,
+        authController,
         projectController,
         taskController,
         teamController,
@@ -17,10 +20,11 @@ export function createApp(): Express {
 
     app.use(express.json());
     app.get("/health", (_req, res) => res.status(200).json({ status: "OK" }));
-    app.use("/", projectRoutes(projectController));
-    app.use("/", taskRoutes(taskController));
-    app.use("/", teamRoutes(teamController));
-    app.use("/", userRoutes(userController));
+    app.use("/", authRoutes(authController));
+    app.use("/", projectRoutes(projectController, authMiddleware));
+    app.use("/", taskRoutes(taskController, authMiddleware));
+    app.use("/", teamRoutes(teamController, authMiddleware));
+    app.use("/", userRoutes(userController, authMiddleware));
 
     app.use(errorMiddleware);
     return app;

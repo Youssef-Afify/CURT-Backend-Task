@@ -1,10 +1,11 @@
 import { CreateTeamDto, UpdateTeamDto } from "../../core/dtos/team.dto";
 import { Team } from "../../core/entities/team";
 import { UserTeams } from "../../core/entities/user_teams";
-import { NotFoundError } from "../../core/errors/appError";
+import { ForbiddenError, NotFoundError } from "../../core/errors/appError";
 import { IBaseLogger } from "../../core/iLoggers/iBaseLogger";
 import { ITeamRepository } from "../../core/iRepositories/iTeam.repository";
 import { ITeamService } from "../../core/iServices/iTeam.service";
+import { requireCurrentUserId } from "../contextVars/user.context";
 
 export class TeamService implements ITeamService {
     constructor(
@@ -13,10 +14,12 @@ export class TeamService implements ITeamService {
     ) {}
 
     async create(dto: CreateTeamDto): Promise<Team> {
+        const creatorId = requireCurrentUserId();
+
         const team = await this.teamRepository.create({
             name: dto.name,
             description: dto.description,
-            // creatorId: creatorId
+            creatorId: creatorId,
         });
         return team;
     }
@@ -31,6 +34,12 @@ export class TeamService implements ITeamService {
     }
 
     async update(id: string, dto: UpdateTeamDto): Promise<Team> {
+        const creatorId = requireCurrentUserId();
+        const existing = await this.getById(id);
+        if (existing.creatorId !== creatorId) {
+            throw new ForbiddenError("Only the team's creator can update it");
+        }
+
         const updated = await this.teamRepository.update(id, {
             name: dto.name,
             description: dto.description,
@@ -43,6 +52,12 @@ export class TeamService implements ITeamService {
     }
 
     async delete(id: string): Promise<void> {
+        const creatorId = requireCurrentUserId();
+        const existing = await this.getById(id);
+        if (existing.creatorId !== creatorId) {
+            throw new ForbiddenError("Only the team's creator can delete it");
+        }
+
         const deleted = await this.teamRepository.delete(id);
         if (!deleted) {
             this.logger.error(`Team ${id} not found`);

@@ -13,10 +13,10 @@ export class UserRepository extends BaseRepository implements IUserRepository {
 
     async create(data: Partial<User>): Promise<User> {
         const rows = await this.query<UserRow>(
-            `INSERT INTO users (name, email, password)
-            VALUES ($1, $2, $3)
+            `INSERT INTO users (user_id, name, email, password)
+            VALUES ($1, $2, $3, $4)
             RETURNING user_id, name, email, password, "timestamp"`,
-            [data.name, data.email, data.password],
+            [data.userId, data.name, data.email, data.password],
         );
         return User.toEntity(rows[0]);
     }

@@ -12,7 +12,7 @@ export class TaskRepository extends BaseRepository implements ITaskRepository {
     async create(data: Partial<Task>): Promise<Task> {
         const rows = await this.query<TaskRow>(
             `INSERT INTO tasks (title, description, priority, status, project_id)
-            VALUES ($1, $2, $3, "To Do", $4)
+            VALUES ($1, $2, $3, 'To Do', $4)
             RETURNING task_id, title, description, priority, status, created_at, updated_at, project_id`,
             [data.title, data.description, data.priority, data.projectId],
         );

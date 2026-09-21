@@ -1,0 +1,401 @@
+{
+    "info": {
+        "name": "CURT Backend API",
+        "description": "Postman collection for the Team / Project / Task backend",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "variable": [
+        {
+            "key": "baseUrl",
+            "value": "http://localhost:3000",
+            "type": "string"
+        },
+        {
+            "key": "userId",
+            "value": "00000000-0000-0000-0000-000000000000",
+            "type": "string"
+        },
+        {
+            "key": "projectId",
+            "value": "00000000-0000-0000-0000-000000000000",
+            "type": "string"
+        },
+        {
+            "key": "taskId",
+            "value": "00000000-0000-0000-0000-000000000000",
+            "type": "string"
+        },
+        {
+            "key": "teamId",
+            "value": "00000000-0000-0000-0000-000000000000",
+            "type": "string"
+        },
+        {
+            "key": "creatorId",
+            "value": "00000000-0000-0000-0000-000000000000",
+            "type": "string"
+        }
+    ],
+    "item": [
+        {
+            "name": "Health",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/health",
+                    "host": ["{{baseUrl}}"],
+                    "path": ["health"]
+                }
+            }
+        },
+        {
+            "name": "User - Create",
+            "request": {
+                "method": "POST",
+                "header": [
+                    { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"name\": \"Jane Doe\",\n  \"email\": \"jane@example.com\",\n  \"password\": \"secret123\"\n}"
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/users",
+                    "host": ["{{baseUrl}}"],
+                    "path": ["users"]
+                }
+            }
+        },
+        {
+            "name": "User - Get By Id",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/users/{{userId}}",
+                    "host": ["{{baseUrl}}"],
+                    "path": ["users", "{{userId}}"]
+                }
+            }
+        },
+        {
+            "name": "User - Update",
+            "request": {
+                "method": "PUT",
+                "header": [
+                    { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"name\": \"Jane Updated\",\n  \"email\": \"jane.updated@example.com\"\n}"
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/users/{{userId}}",
+                    "host": ["{{baseUrl}}"],
+                    "path": ["users", "{{userId}}"]
+                }
+            }
+        },
+        {
+            "name": "User - Delete",
+            "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/users/{{userId}}",
+                    "host": ["{{baseUrl}}"],
+                    "path": ["users", "{{userId}}"]
+                }
+            }
+        },
+        {
+            "name": "Users in Project",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/projects/{{projectId}}/users",
+                    "host": ["{{baseUrl}}"],
+                    "path": ["projects", "{{projectId}}", "users"]
+                }
+            }
+        },
+        {
+            "name": "Users in Task",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/tasks/{{taskId}}/users",
+                    "host": ["{{baseUrl}}"],
+                    "path": ["tasks", "{{taskId}}", "users"]
+                }
+            }
+        },
+        {
+            "name": "Users in Team",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/teams/{{teamId}}/users",
+                    "host": ["{{baseUrl}}"],
+                    "path": ["teams", "{{teamId}}", "users"]
+                }
+            }
+        },
+        {
+            "name": "Project - Create",
+            "request": {
+                "method": "POST",
+                "header": [
+                    { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"name\": \"Website Redesign\",\n  \"description\": \"Revamp the landing page and dashboard design\",\n  \"creatorId\": \"{{creatorId}}\"\n}"
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/projects",
+                    "host": ["{{baseUrl}}"],
+                    "path": ["projects"]
+                }
+            }
+        },
+        {
+            "name": "Project - Get By Id",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/projects/{{projectId}}",
+                    "host": ["{{baseUrl}}"],
+                    "path": ["projects", "{{projectId}}"]
+                }
+            }
+        },
+        {
+            "name": "Project - Update",
+            "request": {
+                "method": "PUT",
+                "header": [
+                    { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"name\": \"Website Redesign v2\",\n  \"description\": \"Updated project scope\",\n  \"progress\": \"In Progress\"\n}"
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/projects/{{projectId}}",
+                    "host": ["{{baseUrl}}"],
+                    "path": ["projects", "{{projectId}}"]
+                }
+            }
+        },
+        {
+            "name": "Project - Delete",
+            "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/projects/{{projectId}}",
+                    "host": ["{{baseUrl}}"],
+                    "path": ["projects", "{{projectId}}"]
+                }
+            }
+        },
+        {
+            "name": "Projects for User",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/users/{{userId}}/projects",
+                    "host": ["{{baseUrl}}"],
+                    "path": ["users", "{{userId}}", "projects"]
+                }
+            }
+        },
+        {
+            "name": "Projects for Creator",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/creators/{{creatorId}}/projects",
+                    "host": ["{{baseUrl}}"],
+                    "path": ["creators", "{{creatorId}}", "projects"]
+                }
+            }
+        },
+        {
+            "name": "Task - Create",
+            "request": {
+                "method": "POST",
+                "header": [
+                    { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"title\": \"Create homepage mockup\",\n  \"description\": \"Design the home page hero section\",\n  \"priority\": \"High\",\n  \"status\": \"To Do\",\n  \"projectId\": \"{{projectId}}\"\n}"
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/tasks",
+                    "host": ["{{baseUrl}}"],
+                    "path": ["tasks"]
+                }
+            }
+        },
+        {
+            "name": "Task - Get By Id",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/tasks/{{taskId}}",
+                    "host": ["{{baseUrl}}"],
+                    "path": ["tasks", "{{taskId}}"]
+                }
+            }
+        },
+        {
+            "name": "Task - Update",
+            "request": {
+                "method": "PUT",
+                "header": [
+                    { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"title\": \"Create homepage mockup\",\n  \"description\": \"Updated mockup details\",\n  \"priority\": \"Medium\",\n  \"status\": \"In Progress\"\n}"
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/tasks/{{taskId}}",
+                    "host": ["{{baseUrl}}"],
+                    "path": ["tasks", "{{taskId}}"]
+                }
+            }
+        },
+        {
+            "name": "Task - Delete",
+            "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/tasks/{{taskId}}",
+                    "host": ["{{baseUrl}}"],
+                    "path": ["tasks", "{{taskId}}"]
+                }
+            }
+        },
+        {
+            "name": "Tasks for User",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/users/{{userId}}/tasks",
+                    "host": ["{{baseUrl}}"],
+                    "path": ["users", "{{userId}}", "tasks"]
+                }
+            }
+        },
+        {
+            "name": "Tasks for Project",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/projects/{{projectId}}/tasks",
+                    "host": ["{{baseUrl}}"],
+                    "path": ["projects", "{{projectId}}", "tasks"]
+                }
+            }
+        },
+        {
+            "name": "Team - Create",
+            "request": {
+                "method": "POST",
+                "header": [
+                    { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"name\": \"Design Team\",\n  \"description\": \"Working on product design and UX\",\n  \"creatorId\": \"{{creatorId}}\"\n}"
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/teams",
+                    "host": ["{{baseUrl}}"],
+                    "path": ["teams"]
+                }
+            }
+        },
+        {
+            "name": "Team - Get By Id",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/teams/{{teamId}}",
+                    "host": ["{{baseUrl}}"],
+                    "path": ["teams", "{{teamId}}"]
+                }
+            }
+        },
+        {
+            "name": "Team - Update",
+            "request": {
+                "method": "PUT",
+                "header": [
+                    { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"name\": \"Design Team Updated\",\n  \"description\": \"Updated team scope\"\n}"
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/teams/{{teamId}}",
+                    "host": ["{{baseUrl}}"],
+                    "path": ["teams", "{{teamId}}"]
+                }
+            }
+        },
+        {
+            "name": "Team - Delete",
+            "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/teams/{{teamId}}",
+                    "host": ["{{baseUrl}}"],
+                    "path": ["teams", "{{teamId}}"]
+                }
+            }
+        },
+        {
+            "name": "Teams for User",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/users/{{userId}}/teams",
+                    "host": ["{{baseUrl}}"],
+                    "path": ["users", "{{userId}}", "teams"]
+                }
+            }
+        },
+        {
+            "name": "Teams for Creator",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/creators/{{creatorId}}/teams",
+                    "host": ["{{baseUrl}}"],
+                    "path": ["creators", "{{creatorId}}", "teams"]
+                }
+            }
+        }
+    ]
+}
