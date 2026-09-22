@@ -12,12 +12,14 @@ export class UserProjectService implements IUserProjectService {
     ) {}
 
     async create(dto: CreateUserProjectDto): Promise<UserProject> {
-        const userProject = await this.userProjectRepository.create(dto);
+        const data = new UserProject(dto.userId, dto.projectId);
+        const userProject = await this.userProjectRepository.create(data);
         return userProject;
     }
 
     async delete(dto: DeleteUserProjectDto): Promise<void> {
-        const deleted = await this.userProjectRepository.delete(dto);
+        const data = new UserProject(dto.userId, dto.projectId);
+        const deleted = await this.userProjectRepository.delete(data);
         if (!deleted) {
             this.logger.error(`User-Project with userId: ${dto.userId}, projectId: ${dto.projectId} not found`);
             throw new NotFoundError(`User-Project with userId: ${dto.userId}, projectId: ${dto.projectId} not found`);

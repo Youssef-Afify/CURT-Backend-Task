@@ -12,12 +12,14 @@ export class UserTeamService implements IUserTeamService {
     ) {}
 
     async create(dto: CreateUserTeamDto): Promise<UserTeam> {
-        const userTeam = await this.userTeamRepository.create(dto);
+        const data = new UserTeam(dto.userId, dto.teamId);
+        const userTeam = await this.userTeamRepository.create(data);
         return userTeam;
     }
 
     async delete(dto: DeleteUserTeamDto): Promise<void> {
-        const deleted = await this.userTeamRepository.delete(dto);
+        const data = new UserTeam(dto.userId, dto.teamId);
+        const deleted = await this.userTeamRepository.delete(data);
         if (!deleted) {
             this.logger.error(`User-Team with userId: ${dto.userId}, TeamId: ${dto.teamId} not found`);
             throw new NotFoundError(`User-Team with userId: ${dto.userId}, TeamId: ${dto.teamId} not found`);

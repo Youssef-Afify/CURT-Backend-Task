@@ -12,12 +12,14 @@ export class UserTaskService implements IUserTaskService {
     ) {}
 
     async create(dto: CreateUserTaskDto): Promise<UserTask> {
-        const userTask = await this.userTaskRepository.create(dto);
+        const data = new UserTask(dto.userId, dto.taskId);
+        const userTask = await this.userTaskRepository.create(data);
         return userTask;
     }
 
     async delete(dto: DeleteUserTaskDto): Promise<void> {
-        const deleted = await this.userTaskRepository.delete(dto);
+        const data = new UserTask(dto.userId, dto.taskId);
+        const deleted = await this.userTaskRepository.delete(data);
         if (!deleted) {
             this.logger.error(`User-Task with userId: ${dto.userId}, TaskId: ${dto.taskId} not found`);
             throw new NotFoundError(`User-Task with userId: ${dto.userId}, TaskId: ${dto.taskId} not found`);
