@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { CreatorController } from "../controllers/creator.controller";
-import { AuthMiddleware } from "../middlewares/authMiddleware";
 import { asyncHandler } from "../../core/utils/asyncHandler";
+import { AuthMiddleware } from "../middlewares/authMiddleware";
 
 export function creatorRoutes(
     creatorController: CreatorController,

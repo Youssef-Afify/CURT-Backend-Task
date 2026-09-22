@@ -7,6 +7,9 @@ import { taskRoutes } from "./api/routes/task.route";
 import { teamRoutes } from "./api/routes/team.route";
 import { userRoutes } from "./api/routes/user.route";
 import { errorMiddleware } from "./api/middlewares/errorMiddleware";
+import { userProjectRoutes } from "./api/routes/userProject.route";
+import { userTaskRoutes } from "./api/routes/userTask.route";
+import { userTeamRoutes } from "./api/routes/userTeam.route";
 
 export function createApp(): Express {
     const app = express();
@@ -18,6 +21,9 @@ export function createApp(): Express {
         taskController,
         teamController,
         userController,
+        userProjectController,
+        userTaskController,
+        userTeamController,
     } = buildContainer();
 
     app.use(express.json());
@@ -28,6 +34,9 @@ export function createApp(): Express {
     app.use("/tasks", taskRoutes(taskController, authMiddleware));
     app.use("/teams", teamRoutes(teamController, authMiddleware));
     app.use("/users", userRoutes(userController, authMiddleware));
+    app.use("/user-projects", userProjectRoutes(userProjectController, authMiddleware));
+    app.use("/user-tasks", userTaskRoutes(userTaskController, authMiddleware));
+    app.use("/user-teams", userTeamRoutes(userTeamController, authMiddleware));
 
     app.use(errorMiddleware);
     return app;
