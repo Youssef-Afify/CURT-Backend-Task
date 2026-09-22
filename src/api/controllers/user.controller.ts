@@ -2,9 +2,17 @@ import { Request, Response, NextFunction } from "express";
 import { IUserController } from "../../core/iControllers/iUser.controller";
 import { IUserService } from "../../core/iServices/iUser.service";
 import { CreateUserSchema, UpdateUserSchema } from "../../core/dtos/user.dto";
+import { ProjectByUserPort } from "../../core/ports/project.port";
+import { TaskByUserPort } from "../../core/ports/task.port";
+import { TeamByUserPort } from "../../core/ports/team.port";
 
 export class UserController implements IUserController {
-    constructor(private readonly userService: IUserService) {}
+    constructor(
+        private readonly userService: IUserService,
+        private readonly projectByUserPort: ProjectByUserPort,
+        private readonly taskByUserPort: TaskByUserPort,
+        private readonly teamByUserPort: TeamByUserPort,
+    ) {}
 
     async create(req: Request, res: Response, _next: NextFunction): Promise<void> {
         const dto = CreateUserSchema.parse(req.body);
@@ -27,19 +35,19 @@ export class UserController implements IUserController {
         await this.userService.delete(req.params.id);
         res.status(204).send();
     }
-
-    async getAllByProjectId(req: Request, res: Response, _next: NextFunction): Promise<void> {
-        const projectMembers = await this.userService.getAllByProjectId(req.params.project_id);
-        res.status(200).json(projectMembers);
+    
+    async getProjectsForUser(req: Request, res: Response, _next: NextFunction): Promise<void> {
+        const projects = await this.projectByUserPort.getProjectsForUser(req.params.id);
+        res.status(200).json(projects);
     }
 
-    async getAllByTaskId(req: Request, res: Response, _next: NextFunction): Promise<void> {
-        const taskMembers = await this.userService.getAllByTaskId(req.params.task_id);
-        res.status(200).json(taskMembers);
+    async getTasksForUser(req: Request, res: Response, _next: NextFunction): Promise<void> {
+        const tasks = await this.taskByUserPort.getTasksForUser(req.params.id);
+        res.status(200).json(tasks);
     }
 
-    async getAllByTeamId(req: Request, res: Response, _next: NextFunction): Promise<void> {
-        const teamMembers = await this.userService.getAllByTeamId(req.params.team_id);
-        res.status(200).json(teamMembers);
+    async getTeamsForUser(req: Request, res: Response, _next: NextFunction): Promise<void> {
+        const teams = await this.teamByUserPort.getTeamsForUser(req.params.id);
+        res.status(200).json(teams);
     }
 }

@@ -2,9 +2,13 @@ import { Request, Response, NextFunction } from "express";
 import { ITaskController } from "../../core/iControllers/iTask.controller";
 import { ITaskService } from "../../core/iServices/iTask.service";
 import { CreateTaskSchema, UpdateTaskSchema } from "../../core/dtos/task.dto";
+import { UserByTaskPort } from "../../core/ports/user.port";
 
 export class TaskController implements ITaskController {
-    constructor(private readonly taskService: ITaskService) {}
+    constructor(
+        private readonly taskService: ITaskService,
+        private readonly userByTaskPort: UserByTaskPort,
+    ) {}
 
     async create(req: Request, res: Response, _next: NextFunction): Promise<void> {
         const dto = CreateTaskSchema.parse(req.body);
@@ -28,13 +32,8 @@ export class TaskController implements ITaskController {
         res.status(204).send();
     }
 
-    async getAllByUserId(req: Request, res: Response, _next: NextFunction): Promise<void> {
-        const userTasks = await this.taskService.getAllByUserId(req.params.user_id);
-        res.status(200).json(userTasks);
-    }
-
-    async getAllByProjectId(req: Request, res: Response, _next: NextFunction): Promise<void> {
-        const projectTasks = await this.taskService.getAllByProjectId(req.params.project_id);
-        res.status(200).json(projectTasks);
+    async getUsersForTask(req: Request, res: Response, _next: NextFunction): Promise<void> {
+        const users = await this.userByTaskPort.getUsersForTask(req.params.id);
+        res.status(200).json(users);
     }
 }

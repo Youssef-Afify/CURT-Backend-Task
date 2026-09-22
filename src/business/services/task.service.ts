@@ -1,6 +1,5 @@
 import { CreateTaskDto, UpdateTaskDto } from "../../core/dtos/task.dto";
 import { Task } from "../../core/entities/task";
-import { UserTasks } from "../../core/entities/user_tasks";
 import { NotFoundError } from "../../core/errors/appError";
 import { IBaseLogger } from "../../core/iLoggers/iBaseLogger";
 import { ITaskRepository } from "../../core/iRepositories/iTask.repository";
@@ -54,7 +53,7 @@ export class TaskService implements ITaskService {
         }
     }
 
-    async getAllByUserId(userId: string): Promise<UserTasks> {
+    async getAllByUserId(userId: string): Promise<Task[]> {
         const userTasks = await this.taskRepository.getAllByUserId(userId);
         return userTasks;
     }

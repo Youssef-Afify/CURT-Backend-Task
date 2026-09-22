@@ -10,13 +10,13 @@ export function userRoutes (
     const router = Router();
     const auth = asyncHandler(authMiddleware.handle.bind(authMiddleware));
 
-    router.post("/users", auth, asyncHandler(userController.create.bind(userController)));
-    router.get("/users/:id", auth, asyncHandler(userController.getById.bind(userController)));
-    router.put("/users/:id", auth, asyncHandler(userController.update.bind(userController)));
-    router.delete("/users/:id", auth, asyncHandler(userController.delete.bind(userController)));
-    router.get("/projects/:project_id/users", auth, asyncHandler(userController.getAllByProjectId.bind(userController)));
-    router.get("/tasks/:task_id/users", auth, asyncHandler(userController.getAllByTaskId.bind(userController)));
-    router.get("/teams/:team_id/users", auth, asyncHandler(userController.getAllByTeamId.bind(userController)));
+    router.post("/", auth, asyncHandler(userController.create.bind(userController)));
+    router.get("/:id", auth, asyncHandler(userController.getById.bind(userController)));
+    router.put("/:id", auth, asyncHandler(userController.update.bind(userController)));
+    router.delete("/:id", auth, asyncHandler(userController.delete.bind(userController)));
+    router.get("/:id/projects", auth, asyncHandler(userController.getProjectsForUser.bind(userController)));
+    router.get("/:id/tasks", auth, asyncHandler(userController.getTasksForUser.bind(userController)));
+    router.get("/:id/teams", auth, asyncHandler(userController.getTeamsForUser.bind(userController)));
 
     return router;
 }

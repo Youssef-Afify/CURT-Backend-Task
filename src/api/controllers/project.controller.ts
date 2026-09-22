@@ -2,9 +2,15 @@ import { Request, Response, NextFunction } from "express";
 import { IProjectController } from "../../core/iControllers/iProject.controller";
 import { IProjectService } from "../../core/iServices/iProject.service";
 import { CreateProjectSchema, UpdateProjectSchema } from "../../core/dtos/project.dto";
+import { UserByProjectPort } from "../../core/ports/user.port";
+import { TaskByProjectPort } from "../../core/ports/task.port";
 
 export class ProjectController implements IProjectController {
-    constructor(private readonly projectService: IProjectService) {}
+    constructor(
+        private readonly projectService: IProjectService,
+        private readonly userByProjectPort: UserByProjectPort,
+        private readonly taskByProjectPort: TaskByProjectPort,
+    ) {}
 
     async create(req: Request, res: Response, _next: NextFunction): Promise<void> {
         const dto = CreateProjectSchema.parse(req.body);
@@ -28,13 +34,13 @@ export class ProjectController implements IProjectController {
         res.status(204).send();
     }
 
-    async getAllByUserId(req: Request, res: Response, _next: NextFunction): Promise<void> {
-        const userProjects = await this.projectService.getAllByUserId(req.params.user_id);
-        res.status(200).json(userProjects);
+    async getUsersForProject(req: Request, res: Response, _next: NextFunction): Promise<void> {
+        const users = await this.userByProjectPort.getUsersForProject(req.params.id);
+        res.status(200).json(users);
     }
 
-    async getAllByCreatorId(req: Request, res: Response, _next: NextFunction): Promise<void> {
-        const creatorProjects = await this.projectService.getAllByCreatorId(req.params.creator_id);
-        res.status(200).json(creatorProjects);
+    async getTasksForProject(req: Request, res: Response, _next: NextFunction): Promise<void> {
+        const tasks = await this.taskByProjectPort.getTasksForProject(req.params.id);
+        res.status(200).json(tasks);
     }
 }

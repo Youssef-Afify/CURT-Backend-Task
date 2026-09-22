@@ -1,8 +1,5 @@
 import { CreateUserDto, UpdateUserDto } from "../../core/dtos/user.dto";
 import { User } from "../../core/entities/user";
-import { ProjectMembers } from "../../core/entities/project_members";
-import { TaskMembers } from "../../core/entities/task_members";
-import { TeamMembers } from "../../core/entities/team_members";
 import { NotFoundError, UnauthorizedError } from "../../core/errors/appError";
 import { IBaseLogger } from "../../core/iLoggers/iBaseLogger";
 import { IUserRepository } from "../../core/iRepositories/iUser.repository";
@@ -62,17 +59,17 @@ export class UserService implements IUserService {
         }
     }
 
-    async getAllByProjectId(projectId: string): Promise<ProjectMembers> {
+    async getAllByProjectId(projectId: string): Promise<User[]> {
         const projectMembers = await this.userRepository.getAllByProjectId(projectId);
         return projectMembers;
     }
 
-    async getAllByTaskId(taskId: string): Promise<TaskMembers> {
+    async getAllByTaskId(taskId: string): Promise<User[]> {
         const taskMembers = await this.userRepository.getAllByTaskId(taskId);
         return taskMembers;
     }
 
-    async getAllByTeamId(teamId: string): Promise<TeamMembers> {
+    async getAllByTeamId(teamId: string): Promise<User[]> {
         const teamMembers = await this.userRepository.getAllByTeamId(teamId);
         return teamMembers;
     }

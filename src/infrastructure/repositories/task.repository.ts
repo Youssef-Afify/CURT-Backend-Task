@@ -2,7 +2,6 @@ import { Pool } from "pg";
 import { ITaskRepository } from "../../core/iRepositories/iTask.repository";
 import { BaseRepository } from "./base/base.repository";
 import { Task, TaskRow } from "../../core/entities/task";
-import { UserTasks } from "../../core/entities/user_tasks";
 
 export class TaskRepository extends BaseRepository implements ITaskRepository {
     constructor(pool: Pool) {
@@ -92,7 +91,7 @@ export class TaskRepository extends BaseRepository implements ITaskRepository {
         return Task.toEntities(rows);
     }
 
-    async getAllByUserId(userId: string): Promise<UserTasks> {
+    async getAllByUserId(userId: string): Promise<Task[]> {
         const rows = await this.query<TaskRow>(
             `SELECT t.task_id, t.title, t.description, t.priority, t.status, t.created_at, t.updated_at, t.project_id
             FROM tasks t
@@ -102,6 +101,6 @@ export class TaskRepository extends BaseRepository implements ITaskRepository {
             [userId],
         );
 
-        return new UserTasks(userId, Task.toEntities(rows));
+        return Task.toEntities(rows);
     }
 }

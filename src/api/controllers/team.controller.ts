@@ -2,9 +2,13 @@ import { Request, Response, NextFunction } from "express";
 import { ITeamController } from "../../core/iControllers/iTeam.controller";
 import { ITeamService } from "../../core/iServices/iTeam.service";
 import { CreateTeamSchema, UpdateTeamSchema } from "../../core/dtos/team.dto";
+import { UserByTeamPort } from "../../core/ports/user.port";
 
 export class TeamController implements ITeamController {
-    constructor(private readonly teamService: ITeamService) {}
+    constructor(
+        private readonly teamService: ITeamService,
+        private readonly userByTeamPort: UserByTeamPort,
+    ) {}
 
     async create(req: Request, res: Response, _next: NextFunction): Promise<void> {
         const dto = CreateTeamSchema.parse(req.body);
@@ -28,13 +32,8 @@ export class TeamController implements ITeamController {
         res.status(204).send();
     }
 
-    async getAllByUserId(req: Request, res: Response, _next: NextFunction): Promise<void> {
-        const userTeams = await this.teamService.getAllByUserId(req.params.user_id);
-        res.status(200).json(userTeams);
-    }
-
-    async getAllByCreatorId(req: Request, res: Response, _next: NextFunction): Promise<void> {
-        const creatorTeams = await this.teamService.getAllByCreatorId(req.params.creator_id);
-        res.status(200).json(creatorTeams);
+    async getUsersForTeam(req: Request, res: Response, _next: NextFunction): Promise<void> {
+        const users = await this.userByTeamPort.getUsersForTeam(req.params.id);
+        res.status(200).json(users);
     }
 }

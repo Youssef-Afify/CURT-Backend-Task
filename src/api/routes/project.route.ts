@@ -10,12 +10,12 @@ export function projectRoutes(
     const router = Router();
     const auth = asyncHandler(authMiddleware.handle.bind(authMiddleware));
 
-    router.post("/projects", auth, asyncHandler(projectController.create.bind(projectController)));
-    router.get("/projects/:id", auth, asyncHandler(projectController.getById.bind(projectController)));
-    router.put("/projects/:id", auth, asyncHandler(projectController.update.bind(projectController)));
-    router.delete("/projects/:id", auth, asyncHandler(projectController.delete.bind(projectController)));
-    router.get("/users/:user_id/projects", auth, asyncHandler(projectController.getAllByUserId.bind(projectController)));
-    router.get("/creators/:creator_id/projects", auth, asyncHandler(projectController.getAllByCreatorId.bind(projectController)));
+    router.post("/", auth, asyncHandler(projectController.create.bind(projectController)));
+    router.get("/:id", auth, asyncHandler(projectController.getById.bind(projectController)));
+    router.put("/:id", auth, asyncHandler(projectController.update.bind(projectController)));
+    router.delete("/:id", auth, asyncHandler(projectController.delete.bind(projectController)));
+    router.get("/:id/users", auth, asyncHandler(projectController.getUsersForProject.bind(projectController)));
+    router.get("/:id/tasks", auth, asyncHandler(projectController.getTasksForProject.bind(projectController)));
 
     return router;
 }

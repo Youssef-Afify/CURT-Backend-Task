@@ -2,7 +2,6 @@ import { Pool } from "pg";
 import { IProjectRepository } from "../../core/iRepositories/iProject.repository";
 import { BaseRepository } from "./base/base.repository";
 import { Project, ProjectRow } from "../../core/entities/project";
-import { UserProjects } from "../../core/entities/user_projects";
 
 export class ProjectRepository
     extends BaseRepository
@@ -73,7 +72,7 @@ export class ProjectRepository
         return result.length > 0;
     }
 
-    async getAllByUserId(userId: string): Promise<UserProjects> {
+    async getAllByUserId(userId: string): Promise<Project[]> {
         const rows = await this.query<ProjectRow>(
             `SELECT p.project_id, p.name, p.description, p.progress, p.created_at, p.updated_at, p.creator_id
             FROM projects p
@@ -83,7 +82,7 @@ export class ProjectRepository
             [userId],
         );
 
-        return new UserProjects(userId, Project.toEntities(rows));
+        return Project.toEntities(rows);
     }
 
     async getAllByCreatorId(creatorId: string): Promise<Project[]> {

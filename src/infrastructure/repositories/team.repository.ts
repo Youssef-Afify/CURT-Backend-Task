@@ -2,7 +2,6 @@ import { Pool } from "pg";
 import { ITeamRepository } from "../../core/iRepositories/iTeam.repository";
 import { BaseRepository } from "./base/base.repository";
 import { Team, TeamRow } from "../../core/entities/team";
-import { UserTeams } from "../../core/entities/user_teams";
 
 export class TeamRepository
     extends BaseRepository
@@ -68,7 +67,7 @@ export class TeamRepository
         return result.length > 0;
     }
 
-    async getAllByUserId(userId: string): Promise<UserTeams> {
+    async getAllByUserId(userId: string): Promise<Team[]> {
         const rows = await this.query<TeamRow>(
             `SELECT t.team_id, t.name, t.description, t."timestamp", t.creator_id
             FROM teams t
@@ -78,7 +77,7 @@ export class TeamRepository
             [userId],
         );
 
-        return new UserTeams(userId, Team.toEntities(rows));
+        return Team.toEntities(rows);
     }
 
     async getAllByCreatorId(creatorId: string): Promise<Team[]> {

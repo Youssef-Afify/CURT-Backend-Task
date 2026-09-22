@@ -2,9 +2,6 @@ import { Pool } from "pg";
 import { IUserRepository } from "../../core/iRepositories/iUser.repository";
 import { BaseRepository } from "./base/base.repository";
 import { User, UserRow } from "../../core/entities/user";
-import { ProjectMembers } from "../../core/entities/project_members";
-import { TaskMembers } from "../../core/entities/task_members";
-import { TeamMembers } from "../../core/entities/team_members";
 
 export class UserRepository extends BaseRepository implements IUserRepository {
     constructor(pool: Pool) {
@@ -63,7 +60,7 @@ export class UserRepository extends BaseRepository implements IUserRepository {
         return result.length > 0;
     }
 
-    async getAllByProjectId(projectId: string): Promise<ProjectMembers> {
+    async getAllByProjectId(projectId: string): Promise<User[]> {
         const rows = await this.query<UserRow>(
             `SELECT u.user_id, u.name, u.email, u.password, u."timestamp"
             FROM users u
@@ -73,10 +70,10 @@ export class UserRepository extends BaseRepository implements IUserRepository {
             [projectId],
         );
 
-        return new ProjectMembers(projectId, User.toEntities(rows));
+        return User.toEntities(rows);
     }
 
-    async getAllByTaskId(taskId: string): Promise<TaskMembers> {
+    async getAllByTaskId(taskId: string): Promise<User[]> {
         const rows = await this.query<UserRow>(
             `SELECT u.user_id, u.name, u.email, u.password, u."timestamp"
             FROM users u
@@ -86,10 +83,10 @@ export class UserRepository extends BaseRepository implements IUserRepository {
             [taskId],
         );
 
-        return new TaskMembers(taskId, User.toEntities(rows));
+        return User.toEntities(rows);
     }
 
-    async getAllByTeamId(teamId: string): Promise<TeamMembers> {
+    async getAllByTeamId(teamId: string): Promise<User[]> {
         const rows = await this.query<UserRow>(
             `SELECT u.user_id, u.name, u.email, u.password, u."timestamp"
             FROM users u
@@ -99,6 +96,6 @@ export class UserRepository extends BaseRepository implements IUserRepository {
             [teamId],
         );
 
-        return new TeamMembers(teamId, User.toEntities(rows));
+        return User.toEntities(rows);
     }
 }

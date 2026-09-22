@@ -1,6 +1,5 @@
 import { CreateProjectDto, UpdateProjectDto } from "../../core/dtos/project.dto";
 import { Project } from "../../core/entities/project";
-import { UserProjects } from "../../core/entities/user_projects";
 import { ForbiddenError, NotFoundError } from "../../core/errors/appError";
 import { IBaseLogger } from "../../core/iLoggers/iBaseLogger";
 import { IProjectRepository } from "../../core/iRepositories/iProject.repository";
@@ -66,7 +65,7 @@ export class ProjectService implements IProjectService {
         }
     }
 
-    async getAllByUserId(userId: string): Promise<UserProjects> {
+    async getAllByUserId(userId: string): Promise<Project[]> {
         const userProjects = await this.projectRepository.getAllByUserId(userId);
         return userProjects;
     }

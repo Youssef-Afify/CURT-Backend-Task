@@ -10,12 +10,11 @@ export function taskRoutes(
     const router = Router();
     const auth = asyncHandler(authMiddleware.handle.bind(authMiddleware));
 
-    router.post("/tasks", auth, asyncHandler(taskController.create.bind(taskController)));
-    router.get("/tasks/:id", auth, asyncHandler(taskController.getById.bind(taskController)));
-    router.put("/tasks/:id", auth, asyncHandler(taskController.update.bind(taskController)));
-    router.delete("/tasks/:id", auth, asyncHandler(taskController.delete.bind(taskController)));
-    router.get("/users/:user_id/tasks", auth, asyncHandler(taskController.getAllByUserId.bind(taskController)));
-    router.get("/projects/:project_id/tasks", auth, asyncHandler(taskController.getAllByProjectId.bind(taskController)));
+    router.post("/", auth, asyncHandler(taskController.create.bind(taskController)));
+    router.get("/:id", auth, asyncHandler(taskController.getById.bind(taskController)));
+    router.put("/:id", auth, asyncHandler(taskController.update.bind(taskController)));
+    router.delete("/:id", auth, asyncHandler(taskController.delete.bind(taskController)));
+    router.get("/:id/users", auth, asyncHandler(taskController.getUsersForTask.bind(taskController)));
 
     return router;
 }
