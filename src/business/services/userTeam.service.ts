@@ -1,5 +1,8 @@
-import { CreateUserTeamDto, DeleteUserTeamDto } from "../../core/dtos/userTeam.dto";
-import { UserTeam } from "../../core/entities/userTeam";
+import {
+    CreateUserTeamDto,
+    DeleteUserTeamDto,
+} from "../../core/dtos/userTeam.dto";
+import { UserTeam } from "../../core/entities/userTeam.entity";
 import { NotFoundError } from "../../core/errors/appError";
 import { IBaseLogger } from "../../core/iLoggers/iBaseLogger";
 import { IUserTeamRepository } from "../../core/iRepositories/iUserTeam.repository";
@@ -21,8 +24,12 @@ export class UserTeamService implements IUserTeamService {
         const data = new UserTeam(dto.userId, dto.teamId);
         const deleted = await this.userTeamRepository.delete(data);
         if (!deleted) {
-            this.logger.error(`User-Team with userId: ${dto.userId}, TeamId: ${dto.teamId} not found`);
-            throw new NotFoundError(`User-Team with userId: ${dto.userId}, TeamId: ${dto.teamId} not found`);
+            this.logger.error(
+                `User-Team with userId: ${dto.userId}, TeamId: ${dto.teamId} not found`,
+            );
+            throw new NotFoundError(
+                `User-Team with userId: ${dto.userId}, TeamId: ${dto.teamId} not found`,
+            );
         }
     }
 }

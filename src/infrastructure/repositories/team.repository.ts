@@ -1,12 +1,9 @@
 import { Pool } from "pg";
 import { ITeamRepository } from "../../core/iRepositories/iTeam.repository";
 import { BaseRepository } from "./base/base.repository";
-import { Team, TeamRow } from "../../core/entities/team";
+import { Team, TeamRow } from "../../core/entities/team.entity";
 
-export class TeamRepository
-    extends BaseRepository
-    implements ITeamRepository
-{
+export class TeamRepository extends BaseRepository implements ITeamRepository {
     constructor(pool: Pool) {
         super(pool);
     }
@@ -71,8 +68,8 @@ export class TeamRepository
         const rows = await this.query<TeamRow>(
             `SELECT t.team_id, t.name, t.description, t."timestamp", t.creator_id
             FROM teams t
-            INNER JOIN team_members tm ON t.team_id = tm.team_id
-            WHERE tm.user_id = $1
+            INNER JOIN user_teams ut ON t.team_id = ut.team_id
+            WHERE ut.user_id = $1
             ORDER BY t."timestamp" DESC`,
             [userId],
         );

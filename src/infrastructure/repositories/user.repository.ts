@@ -1,7 +1,7 @@
 import { Pool } from "pg";
 import { IUserRepository } from "../../core/iRepositories/iUser.repository";
 import { BaseRepository } from "./base/base.repository";
-import { User, UserRow } from "../../core/entities/user";
+import { User, UserRow } from "../../core/entities/user.entity";
 
 export class UserRepository extends BaseRepository implements IUserRepository {
     constructor(pool: Pool) {
@@ -64,7 +64,7 @@ export class UserRepository extends BaseRepository implements IUserRepository {
         const rows = await this.query<UserRow>(
             `SELECT u.user_id, u.name, u.email, u.password, u."timestamp"
             FROM users u
-            INNER JOIN project_members pm ON u.user_id = pm.user_id
+            INNER JOIN user_projects up ON u.user_id = up.user_id
             WHERE project_id = $1
             ORDER BY "timestamp" DESC`,
             [projectId],
@@ -77,7 +77,7 @@ export class UserRepository extends BaseRepository implements IUserRepository {
         const rows = await this.query<UserRow>(
             `SELECT u.user_id, u.name, u.email, u.password, u."timestamp"
             FROM users u
-            INNER JOIN task_members tm ON u.user_id = tm.user_id
+            INNER JOIN user_tasks ut ON u.user_id = ut.user_id
             WHERE task_id = $1
             ORDER BY "timestamp" DESC`,
             [taskId],
@@ -90,7 +90,7 @@ export class UserRepository extends BaseRepository implements IUserRepository {
         const rows = await this.query<UserRow>(
             `SELECT u.user_id, u.name, u.email, u.password, u."timestamp"
             FROM users u
-            INNER JOIN team_members tm ON u.user_id = tm.user_id
+            INNER JOIN user_teams ut ON u.user_id = ut.user_id
             WHERE team_id = $1
             ORDER BY "timestamp" DESC`,
             [teamId],

@@ -1,5 +1,5 @@
 import { CreateTeamDto, UpdateTeamDto } from "../../core/dtos/team.dto";
-import { Team } from "../../core/entities/team";
+import { Team } from "../../core/entities/team.entity";
 import { ForbiddenError, NotFoundError } from "../../core/errors/appError";
 import { IBaseLogger } from "../../core/iLoggers/iBaseLogger";
 import { ITeamRepository } from "../../core/iRepositories/iTeam.repository";
@@ -70,7 +70,8 @@ export class TeamService implements ITeamService {
     }
 
     async getAllByCreatorId(creatorId: string): Promise<Team[]> {
-        const creatorTeams = await this.teamRepository.getAllByCreatorId(creatorId);
+        const creatorTeams =
+            await this.teamRepository.getAllByCreatorId(creatorId);
         return creatorTeams;
     }
 }

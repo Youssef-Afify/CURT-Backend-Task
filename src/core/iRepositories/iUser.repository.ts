@@ -1,4 +1,4 @@
-import { User } from "../entities/user";
+import { User } from "../entities/user.entity";
 import { IBaseRepository } from "./base/iBase.repository";
 
 export interface IUserRepository extends IBaseRepository<User, string> {

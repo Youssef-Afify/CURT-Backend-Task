@@ -22,7 +22,7 @@ $$ LANGUAGE plpgsql;
 -- Table: users
 -- ------------------------------------------------------------
 CREATE TABLE users (
-    user_id     UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id     UUID PRIMARY KEY,
     name        VARCHAR(255)    NOT NULL,
     email       VARCHAR(255)    NOT NULL UNIQUE,
     password    VARCHAR(255)    NOT NULL,
@@ -102,56 +102,56 @@ CREATE TRIGGER trg_tasks_updated_at
     EXECUTE FUNCTION set_updated_at();
 
 -- ------------------------------------------------------------
--- Table: team_members
+-- Table: user_teams
 -- "participate in" (teams:users = M:N) junction table
 -- ------------------------------------------------------------
-CREATE TABLE team_members (
-    team_id     UUID NOT NULL,
+CREATE TABLE user_teams (
     user_id     UUID NOT NULL,
-    PRIMARY KEY (team_id, user_id),
-    CONSTRAINT fk_team_members_team
+    team_id     UUID NOT NULL,
+    PRIMARY KEY (user_id, team_id),
+    CONSTRAINT fk_user_teams_user
+        FOREIGN KEY (user_id) REFERENCES users(user_id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+    CONSTRAINT fk_user_teams_team
         FOREIGN KEY (team_id) REFERENCES teams(team_id)
         ON UPDATE CASCADE
-        ON DELETE CASCADE,
-    CONSTRAINT fk_team_members_user
-        FOREIGN KEY (user_id) REFERENCES users(user_id)
-        ON UPDATE CASCADE
         ON DELETE CASCADE
 );
 
 -- ------------------------------------------------------------
--- Table: project_members
+-- Table: user_projects
 -- "participate in" (projects:users = M:N) junction table
 -- ------------------------------------------------------------
-CREATE TABLE project_members (
-    project_id  UUID NOT NULL,
+CREATE TABLE user_projects (
     user_id     UUID NOT NULL,
-    PRIMARY KEY (project_id, user_id),
-    CONSTRAINT fk_project_members_project
-        FOREIGN KEY (project_id) REFERENCES projects(project_id)
+    project_id  UUID NOT NULL,
+    PRIMARY KEY (user_id, project_id),
+    CONSTRAINT fk_user_projects_user
+        FOREIGN KEY (user_id) REFERENCES users(user_id)
         ON UPDATE CASCADE
         ON DELETE CASCADE,
-    CONSTRAINT fk_project_members_user
-        FOREIGN KEY (user_id) REFERENCES users(user_id)
+    CONSTRAINT fk_user_projects_project
+        FOREIGN KEY (project_id) REFERENCES projects(project_id)
         ON UPDATE CASCADE
         ON DELETE CASCADE
 );
 
 -- ------------------------------------------------------------
--- Table: task_members
+-- Table: user_tasks
 -- "participate in" (tasks:users = M:N) junction table
 -- may at both ends -> no NOT NULL constraints needed beyond PK
 -- ------------------------------------------------------------
-CREATE TABLE task_members (
-    task_id     UUID NOT NULL,
+CREATE TABLE user_tasks (
     user_id     UUID NOT NULL,
-    PRIMARY KEY (task_id, user_id),
-    CONSTRAINT fk_task_members_task
-        FOREIGN KEY (task_id) REFERENCES tasks(task_id)
+    task_id     UUID NOT NULL,
+    PRIMARY KEY (user_id, task_id),
+    CONSTRAINT fk_user_tasks_user
+        FOREIGN KEY (user_id) REFERENCES users(user_id)
         ON UPDATE CASCADE
         ON DELETE CASCADE,
-    CONSTRAINT fk_task_members_user
-        FOREIGN KEY (user_id) REFERENCES users(user_id)
+    CONSTRAINT fk_user_tasks_task
+        FOREIGN KEY (task_id) REFERENCES tasks(task_id)
         ON UPDATE CASCADE
         ON DELETE CASCADE
 );
@@ -176,13 +176,13 @@ CREATE INDEX idx_projects_creator_id ON projects (creator_id);
 CREATE INDEX idx_tasks_project_status ON tasks (project_id, status);
 CREATE INDEX idx_tasks_project_priority ON tasks (project_id, priority);
 
--- Junction tables: the composite PK (a, b) already indexes
+-- Junction tables: the composite PK (user_id, item_id) already indexes
 -- lookups by the first column, but not by the second alone.
 -- Add these to speed up "all teams/projects/tasks a given user
 -- belongs to" queries.
-CREATE INDEX idx_team_members_user_id ON team_members (user_id);
-CREATE INDEX idx_project_members_user_id ON project_members (user_id);
-CREATE INDEX idx_task_members_user_id ON task_members (user_id);
+CREATE INDEX idx_user_teams_team_id ON user_teams (team_id);
+CREATE INDEX idx_user_projects_project_id ON user_projects (project_id);
+CREATE INDEX idx_user_tasks_task_id ON user_tasks (task_id);
 
 -- Common filter columns.
 CREATE INDEX idx_projects_progress ON projects (progress);

@@ -1,5 +1,5 @@
 import { CreateUserTeamDto, DeleteUserTeamDto } from "../dtos/userTeam.dto";
-import { UserTeam } from "../entities/userTeam";
+import { UserTeam } from "../entities/userTeam.entity";
 
 export interface IUserTeamService {
     create(dto: CreateUserTeamDto): Promise<UserTeam>;

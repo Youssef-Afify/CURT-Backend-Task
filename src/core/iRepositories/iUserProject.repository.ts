@@ -1,4 +1,4 @@
-import { UserProject } from "../entities/userProject";
+import { UserProject } from "../entities/userProject.entity";
 
 export interface IUserProjectRepository {
     create(data: UserProject): Promise<UserProject>;

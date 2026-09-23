@@ -1,7 +1,7 @@
 import { Pool } from "pg";
 import { IProjectRepository } from "../../core/iRepositories/iProject.repository";
 import { BaseRepository } from "./base/base.repository";
-import { Project, ProjectRow } from "../../core/entities/project";
+import { Project, ProjectRow } from "../../core/entities/project.entity";
 
 export class ProjectRepository
     extends BaseRepository
@@ -76,8 +76,8 @@ export class ProjectRepository
         const rows = await this.query<ProjectRow>(
             `SELECT p.project_id, p.name, p.description, p.progress, p.created_at, p.updated_at, p.creator_id
             FROM projects p
-            INNER JOIN project_members pm ON p.project_id = pm.project_id
-            WHERE pm.user_id = $1
+            INNER JOIN user_projects up ON p.project_id = up.project_id
+            WHERE up.user_id = $1
             ORDER BY p.created_at DESC`,
             [userId],
         );

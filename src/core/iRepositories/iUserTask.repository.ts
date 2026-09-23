@@ -1,4 +1,4 @@
-import { UserTask } from "../entities/userTask";
+import { UserTask } from "../entities/userTask.entity";
 
 export interface IUserTaskRepository {
     create(data: UserTask): Promise<UserTask>;

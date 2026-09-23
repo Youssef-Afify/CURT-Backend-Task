@@ -1,5 +1,8 @@
-import { CreateUserProjectDto, DeleteUserProjectDto } from "../../core/dtos/userProject.dto";
-import { UserProject } from "../../core/entities/userProject";
+import {
+    CreateUserProjectDto,
+    DeleteUserProjectDto,
+} from "../../core/dtos/userProject.dto";
+import { UserProject } from "../../core/entities/userProject.entity";
 import { NotFoundError } from "../../core/errors/appError";
 import { IBaseLogger } from "../../core/iLoggers/iBaseLogger";
 import { IUserProjectRepository } from "../../core/iRepositories/iUserProject.repository";
@@ -21,8 +24,12 @@ export class UserProjectService implements IUserProjectService {
         const data = new UserProject(dto.userId, dto.projectId);
         const deleted = await this.userProjectRepository.delete(data);
         if (!deleted) {
-            this.logger.error(`User-Project with userId: ${dto.userId}, projectId: ${dto.projectId} not found`);
-            throw new NotFoundError(`User-Project with userId: ${dto.userId}, projectId: ${dto.projectId} not found`);
+            this.logger.error(
+                `User-Project with userId: ${dto.userId}, projectId: ${dto.projectId} not found`,
+            );
+            throw new NotFoundError(
+                `User-Project with userId: ${dto.userId}, projectId: ${dto.projectId} not found`,
+            );
         }
     }
 }

@@ -1,4 +1,4 @@
-import { Project } from "../entities/project";
+import { Project } from "../entities/project.entity";
 import { IBaseRepository } from "./base/iBase.repository";
 
 export interface IProjectRepository extends IBaseRepository<Project, string> {

@@ -1,5 +1,8 @@
-import { CreateProjectDto, UpdateProjectDto } from "../../core/dtos/project.dto";
-import { Project } from "../../core/entities/project";
+import {
+    CreateProjectDto,
+    UpdateProjectDto,
+} from "../../core/dtos/project.dto";
+import { Project } from "../../core/entities/project.entity";
 import { ForbiddenError, NotFoundError } from "../../core/errors/appError";
 import { IBaseLogger } from "../../core/iLoggers/iBaseLogger";
 import { IProjectRepository } from "../../core/iRepositories/iProject.repository";
@@ -36,7 +39,9 @@ export class ProjectService implements IProjectService {
         const creatorId = requireCurrentUserId();
         const existing = await this.getById(id);
         if (existing.creatorId !== creatorId) {
-            throw new ForbiddenError("Only the project's creator can update it")
+            throw new ForbiddenError(
+                "Only the project's creator can update it",
+            );
         }
 
         const updated = await this.projectRepository.update(id, {
@@ -55,7 +60,9 @@ export class ProjectService implements IProjectService {
         const creatorId = requireCurrentUserId();
         const existing = await this.getById(id);
         if (existing.creatorId !== creatorId) {
-            throw new ForbiddenError("Only the project's creator can delete it")
+            throw new ForbiddenError(
+                "Only the project's creator can delete it",
+            );
         }
 
         const deleted = await this.projectRepository.delete(id);
@@ -66,12 +73,14 @@ export class ProjectService implements IProjectService {
     }
 
     async getAllByUserId(userId: string): Promise<Project[]> {
-        const userProjects = await this.projectRepository.getAllByUserId(userId);
+        const userProjects =
+            await this.projectRepository.getAllByUserId(userId);
         return userProjects;
     }
 
     async getAllByCreatorId(creatorId: string): Promise<Project[]> {
-        const creatorProjects = await this.projectRepository.getAllByCreatorId(creatorId);
+        const creatorProjects =
+            await this.projectRepository.getAllByCreatorId(creatorId);
         return creatorProjects;
     }
 }

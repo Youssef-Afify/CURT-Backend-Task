@@ -1,5 +1,5 @@
 import { CreateTaskDto, UpdateTaskDto } from "../../core/dtos/task.dto";
-import { Task } from "../../core/entities/task";
+import { Task } from "../../core/entities/task.entity";
 import { NotFoundError } from "../../core/errors/appError";
 import { IBaseLogger } from "../../core/iLoggers/iBaseLogger";
 import { ITaskRepository } from "../../core/iRepositories/iTask.repository";
@@ -59,7 +59,8 @@ export class TaskService implements ITaskService {
     }
 
     async getAllByProjectId(projectId: string): Promise<Task[]> {
-        const projectTasks = await this.taskRepository.getAllByProjectId(projectId);
+        const projectTasks =
+            await this.taskRepository.getAllByProjectId(projectId);
         return projectTasks;
     }
 }

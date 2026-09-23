@@ -1,4 +1,4 @@
-import { UserTeam } from "../entities/userTeam";
+import { UserTeam } from "../entities/userTeam.entity";
 
 export interface IUserTeamRepository {
     create(data: UserTeam): Promise<UserTeam>;

@@ -1,4 +1,4 @@
-import { Team } from "../entities/team";
+import { Team } from "../entities/team.entity";
 import { IBaseRepository } from "./base/iBase.repository";
 
 export interface ITeamRepository extends IBaseRepository<Team, string> {

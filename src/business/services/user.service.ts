@@ -1,5 +1,5 @@
 import { CreateUserDto, UpdateUserDto } from "../../core/dtos/user.dto";
-import { User } from "../../core/entities/user";
+import { User } from "../../core/entities/user.entity";
 import { NotFoundError, UnauthorizedError } from "../../core/errors/appError";
 import { IBaseLogger } from "../../core/iLoggers/iBaseLogger";
 import { IUserRepository } from "../../core/iRepositories/iUser.repository";
@@ -33,7 +33,9 @@ export class UserService implements IUserService {
     async update(id: string, dto: UpdateUserDto): Promise<User> {
         const userId = requireCurrentUserId();
         if (userId !== id) {
-            throw new UnauthorizedError("Not authorized to update the info of another user");
+            throw new UnauthorizedError(
+                "Not authorized to update the info of another user",
+            );
         }
 
         const updated = await this.userRepository.update(id, {
@@ -49,7 +51,9 @@ export class UserService implements IUserService {
     async delete(id: string): Promise<void> {
         const userId = requireCurrentUserId();
         if (userId !== id) {
-            throw new UnauthorizedError("Not authorized to delete another user");
+            throw new UnauthorizedError(
+                "Not authorized to delete another user",
+            );
         }
 
         const deleted = await this.userRepository.delete(id);
@@ -60,7 +64,8 @@ export class UserService implements IUserService {
     }
 
     async getAllByProjectId(projectId: string): Promise<User[]> {
-        const projectMembers = await this.userRepository.getAllByProjectId(projectId);
+        const projectMembers =
+            await this.userRepository.getAllByProjectId(projectId);
         return projectMembers;
     }
 

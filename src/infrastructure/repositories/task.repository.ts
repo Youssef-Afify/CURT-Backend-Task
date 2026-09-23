@@ -1,7 +1,7 @@
 import { Pool } from "pg";
 import { ITaskRepository } from "../../core/iRepositories/iTask.repository";
 import { BaseRepository } from "./base/base.repository";
-import { Task, TaskRow } from "../../core/entities/task";
+import { Task, TaskRow } from "../../core/entities/task.entity";
 
 export class TaskRepository extends BaseRepository implements ITaskRepository {
     constructor(pool: Pool) {
@@ -95,8 +95,8 @@ export class TaskRepository extends BaseRepository implements ITaskRepository {
         const rows = await this.query<TaskRow>(
             `SELECT t.task_id, t.title, t.description, t.priority, t.status, t.created_at, t.updated_at, t.project_id
             FROM tasks t
-            INNER JOIN task_members tm ON t.task_id = tm.task_id
-            WHERE tm.user_id = $1
+            INNER JOIN user_tasks ut ON t.task_id = ut.task_id
+            WHERE ut.user_id = $1
             ORDER BY t.created_at DESC`,
             [userId],
         );
