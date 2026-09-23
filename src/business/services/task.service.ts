@@ -45,11 +45,19 @@ export class TaskService implements ITaskService {
     }
 
     async update(id: string, dto: UpdateTaskDto): Promise<Task> {
+        const task = await this.taskRepository.getById(id);
+        if (!task) {
+            this.logger.error(`Task ${id} not found`);
+            throw new NotFoundError(`Task ${id} not found`);
+        }
+
         const userId = requireCurrentUserId();
+        const isCreator = await this.isProjectCreatorPort.isProjectCreator(task.projectId, userId);
         const isTaskMember = await this.isUserTaskPort.isUserTask(userId, id);
-        if (!isTaskMember) {
-            this.logger.error("Only members of a task can edit it");
-            throw new ForbiddenError("Only members of a task can edit it");
+
+        if (!isCreator && !isTaskMember) {
+            this.logger.error("Only project's creator and members of a task can edit it");
+            throw new ForbiddenError("Only project's creator and members of a task can edit it");
         }
 
         const updated = await this.taskRepository.update(id, {
