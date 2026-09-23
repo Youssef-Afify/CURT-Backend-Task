@@ -69,9 +69,7 @@ npm run build
 npm start
 ```
 
-## API Documentation / Endpoints
-
-Base URL: https://curt-backend-task-production.up.railway.app
+## API Endpoints
 
 Health
 
@@ -138,30 +136,6 @@ User-Team Link
 - POST /user-teams
 - DELETE /user-teams
 
-## Database design
-
-See `src/core/entities` for the TypeScript entity definitions representing database models. Primary tables represented in the codebase:
-
-- `users` — user records (name, email, password hash, etc.)
-- `projects` — project metadata (name, description, progress)
-- `tasks` — task metadata (title, description, priority, status, projectId)
-- `teams` — team metadata (name, description)
-- linking tables: `user_projects`, `user_tasks`, `user_teams` for many-to-many relations
-
-The SQL migration files in `migrations/` contain the schema used for the project. Review [migrations/schema.sql](migrations/schema.sql) for the full DDL.
-
-## Assumptions & additional notes
-
-- Authentication: the code integrates with Neon Auth (see `src/infrastructure/auth/neonAuthClient.ts`); JWT/session handling relies on that service.
-- Environment: `DATABASE_URL` must be provided; production deployments (Railway) are preconfigured and available at the base URL above.
-- Migrations: `node-pg-migrate` is used; the `migrate` npm script runs the tool.
-- Error handling: centralized error middleware located in `src/api/middlewares/errorMiddleware.ts`.
-
-## Useful links
-
-- Postman collection (endpoints & examples): [postman_collection.json](postman_collection.json)
-- Code entrypoints: [src/server.ts](src/server.ts) and [src/app.ts](src/app.ts)
-
 ## Swagger UI
 
 The project serves an interactive Swagger UI at the `/docs` path when an OpenAPI spec (`openapi.json`) exists at the repository root.
@@ -188,3 +162,27 @@ Notes:
 
 - The server port defaults to `3000` unless `PORT` is set in `.env`.
 - If `/docs` returns a 404 or an empty page, ensure `openapi.json` exists at the project root and is valid JSON.
+
+## Database design
+
+See `src/core/entities` for the TypeScript entity definitions representing database models. Primary tables represented in the codebase:
+
+- `users` — user records (name, email, password hash, etc.)
+- `projects` — project metadata (name, description, progress)
+- `tasks` — task metadata (title, description, priority, status, projectId)
+- `teams` — team metadata (name, description)
+- linking tables: `user_projects`, `user_tasks`, `user_teams` for many-to-many relations
+
+The SQL migration files in `migrations/` contain the schema used for the project. Review [migrations/schema.sql](migrations/schema.sql) for the full DDL.
+
+## Assumptions & additional notes
+
+- Authentication: the code integrates with Neon Auth (see `src/infrastructure/auth/neonAuthClient.ts`); JWT/session handling relies on that service.
+- Environment: `DATABASE_URL` must be provided; production deployments (Railway) are preconfigured and available at the base URL above.
+- Migrations: `node-pg-migrate` is used; the `migrate` npm script runs the tool.
+- Error handling: centralized error middleware located in `src/api/middlewares/errorMiddleware.ts`.
+
+## Useful links
+
+- Postman collection (endpoints & examples): [postman_collection.json](postman_collection.json)
+- Code entrypoints: [src/server.ts](src/server.ts) and [src/app.ts](src/app.ts)

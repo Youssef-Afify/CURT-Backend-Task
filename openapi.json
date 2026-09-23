@@ -31,7 +31,7 @@
                     }
                 },
                 "responses": {
-                    "200": {
+                    "201": {
                         "description": "Signed up",
                         "content": {
                             "application/json": {
@@ -74,7 +74,7 @@
         "/logout": {
             "post": {
                 "summary": "Logout",
-                "responses": { "200": { "description": "Logged out" } }
+                "responses": { "204": { "description": "Logged out" } }
             }
         },
         "/projects": {
@@ -90,7 +90,7 @@
                         }
                     }
                 },
-                "responses": { "200": { "description": "Created" } }
+                "responses": { "201": { "description": "Created" } }
             }
         },
         "/projects/{id}": {
@@ -138,7 +138,7 @@
                         "schema": { "type": "string" }
                     }
                 ],
-                "responses": { "200": { "description": "Deleted" } }
+                "responses": { "204": { "description": "Deleted" } }
             }
         },
         "/projects/{id}/users": {
@@ -182,7 +182,7 @@
                         }
                     }
                 },
-                "responses": { "200": { "description": "Created" } }
+                "responses": { "201": { "description": "Created" } }
             }
         },
         "/tasks/{id}": {
@@ -230,7 +230,7 @@
                         "schema": { "type": "string" }
                     }
                 ],
-                "responses": { "200": { "description": "Deleted" } }
+                "responses": { "204": { "description": "Deleted" } }
             }
         },
         "/tasks/{id}/users": {
@@ -260,7 +260,7 @@
                         }
                     }
                 },
-                "responses": { "200": { "description": "Created" } }
+                "responses": { "201": { "description": "Created" } }
             }
         },
         "/teams/{id}": {
@@ -308,7 +308,7 @@
                         "schema": { "type": "string" }
                     }
                 ],
-                "responses": { "200": { "description": "Deleted" } }
+                "responses": { "204": { "description": "Deleted" } }
             }
         },
         "/teams/{id}/users": {
@@ -338,7 +338,7 @@
                         }
                     }
                 },
-                "responses": { "200": { "description": "Created" } }
+                "responses": { "201": { "description": "Created" } }
             }
         },
         "/users/{id}": {
@@ -386,7 +386,7 @@
                         "schema": { "type": "string" }
                     }
                 ],
-                "responses": { "200": { "description": "Deleted" } }
+                "responses": { "204": { "description": "Deleted" } }
             }
         },
         "/users/{id}/projects": {
@@ -444,7 +444,7 @@
                         }
                     }
                 },
-                "responses": { "200": { "description": "Linked" } }
+                "responses": { "201": { "description": "Linked" } }
             },
             "delete": {
                 "summary": "Unlink user from project",
@@ -458,7 +458,7 @@
                         }
                     }
                 },
-                "responses": { "200": { "description": "Unlinked" } }
+                "responses": { "204": { "description": "Unlinked" } }
             }
         },
         "/user-tasks": {
@@ -474,7 +474,7 @@
                         }
                     }
                 },
-                "responses": { "200": { "description": "Linked" } }
+                "responses": { "201": { "description": "Linked" } }
             },
             "delete": {
                 "summary": "Unlink user from task",
@@ -488,7 +488,7 @@
                         }
                     }
                 },
-                "responses": { "200": { "description": "Unlinked" } }
+                "responses": { "204": { "description": "Unlinked" } }
             }
         },
         "/user-teams": {
@@ -504,7 +504,7 @@
                         }
                     }
                 },
-                "responses": { "200": { "description": "Linked" } }
+                "responses": { "201": { "description": "Linked" } }
             },
             "delete": {
                 "summary": "Unlink user from team",
@@ -518,7 +518,7 @@
                         }
                     }
                 },
-                "responses": { "200": { "description": "Unlinked" } }
+                "responses": { "204": { "description": "Unlinked" } }
             }
         }
     },
