@@ -1,0 +1,635 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "CURT Backend API",
+        "version": "1.0.0",
+        "description": "OpenAPI specification for the CURT Backend (task & project management)"
+    },
+    "servers": [
+        {
+            "url": "https://curt-backend-task-production.up.railway.app"
+        }
+    ],
+    "paths": {
+        "/health": {
+            "get": {
+                "summary": "Health check",
+                "responses": { "200": { "description": "OK" } }
+            }
+        },
+        "/signup": {
+            "post": {
+                "summary": "Sign up user",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserCreate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Signed up",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AuthResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/login": {
+            "post": {
+                "summary": "Login",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserLogin"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Logged in",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AuthResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/logout": {
+            "post": {
+                "summary": "Logout",
+                "responses": { "200": { "description": "Logged out" } }
+            }
+        },
+        "/projects": {
+            "post": {
+                "summary": "Create project",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ProjectCreate"
+                            }
+                        }
+                    }
+                },
+                "responses": { "200": { "description": "Created" } }
+            }
+        },
+        "/projects/{id}": {
+            "get": {
+                "summary": "Get project by id",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "string" }
+                    }
+                ],
+                "responses": { "200": { "description": "OK" } }
+            },
+            "put": {
+                "summary": "Update project",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "string" }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ProjectUpdate"
+                            }
+                        }
+                    }
+                },
+                "responses": { "200": { "description": "Updated" } }
+            },
+            "delete": {
+                "summary": "Delete project",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "string" }
+                    }
+                ],
+                "responses": { "200": { "description": "Deleted" } }
+            }
+        },
+        "/projects/{id}/users": {
+            "get": {
+                "summary": "Get users for project",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "string" }
+                    }
+                ],
+                "responses": { "200": { "description": "OK" } }
+            }
+        },
+        "/projects/{id}/tasks": {
+            "get": {
+                "summary": "Get tasks for project",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "string" }
+                    }
+                ],
+                "responses": { "200": { "description": "OK" } }
+            }
+        },
+        "/tasks": {
+            "post": {
+                "summary": "Create task",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TaskCreate"
+                            }
+                        }
+                    }
+                },
+                "responses": { "200": { "description": "Created" } }
+            }
+        },
+        "/tasks/{id}": {
+            "get": {
+                "summary": "Get task",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "string" }
+                    }
+                ],
+                "responses": { "200": { "description": "OK" } }
+            },
+            "put": {
+                "summary": "Update task",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "string" }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TaskUpdate"
+                            }
+                        }
+                    }
+                },
+                "responses": { "200": { "description": "Updated" } }
+            },
+            "delete": {
+                "summary": "Delete task",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "string" }
+                    }
+                ],
+                "responses": { "200": { "description": "Deleted" } }
+            }
+        },
+        "/tasks/{id}/users": {
+            "get": {
+                "summary": "Get users for task",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "string" }
+                    }
+                ],
+                "responses": { "200": { "description": "OK" } }
+            }
+        },
+        "/teams": {
+            "post": {
+                "summary": "Create team",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TeamCreate"
+                            }
+                        }
+                    }
+                },
+                "responses": { "200": { "description": "Created" } }
+            }
+        },
+        "/teams/{id}": {
+            "get": {
+                "summary": "Get team",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "string" }
+                    }
+                ],
+                "responses": { "200": { "description": "OK" } }
+            },
+            "put": {
+                "summary": "Update team",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "string" }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TeamUpdate"
+                            }
+                        }
+                    }
+                },
+                "responses": { "200": { "description": "Updated" } }
+            },
+            "delete": {
+                "summary": "Delete team",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "string" }
+                    }
+                ],
+                "responses": { "200": { "description": "Deleted" } }
+            }
+        },
+        "/teams/{id}/users": {
+            "get": {
+                "summary": "Get users for team",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "string" }
+                    }
+                ],
+                "responses": { "200": { "description": "OK" } }
+            }
+        },
+        "/users": {
+            "post": {
+                "summary": "Create user",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserCreate"
+                            }
+                        }
+                    }
+                },
+                "responses": { "200": { "description": "Created" } }
+            }
+        },
+        "/users/{id}": {
+            "get": {
+                "summary": "Get user",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "string" }
+                    }
+                ],
+                "responses": { "200": { "description": "OK" } }
+            },
+            "put": {
+                "summary": "Update user",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "string" }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserUpdate"
+                            }
+                        }
+                    }
+                },
+                "responses": { "200": { "description": "Updated" } }
+            },
+            "delete": {
+                "summary": "Delete user",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "string" }
+                    }
+                ],
+                "responses": { "200": { "description": "Deleted" } }
+            }
+        },
+        "/users/{id}/projects": {
+            "get": {
+                "summary": "Get projects for user",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "string" }
+                    }
+                ],
+                "responses": { "200": { "description": "OK" } }
+            }
+        },
+        "/users/{id}/tasks": {
+            "get": {
+                "summary": "Get tasks for user",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "string" }
+                    }
+                ],
+                "responses": { "200": { "description": "OK" } }
+            }
+        },
+        "/users/{id}/teams": {
+            "get": {
+                "summary": "Get teams for user",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "string" }
+                    }
+                ],
+                "responses": { "200": { "description": "OK" } }
+            }
+        },
+        "/user-projects": {
+            "post": {
+                "summary": "Link user to project",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserProjectLink"
+                            }
+                        }
+                    }
+                },
+                "responses": { "200": { "description": "Linked" } }
+            },
+            "delete": {
+                "summary": "Unlink user from project",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserProjectLink"
+                            }
+                        }
+                    }
+                },
+                "responses": { "200": { "description": "Unlinked" } }
+            }
+        },
+        "/user-tasks": {
+            "post": {
+                "summary": "Link user to task",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserTaskLink"
+                            }
+                        }
+                    }
+                },
+                "responses": { "200": { "description": "Linked" } }
+            },
+            "delete": {
+                "summary": "Unlink user from task",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserTaskLink"
+                            }
+                        }
+                    }
+                },
+                "responses": { "200": { "description": "Unlinked" } }
+            }
+        },
+        "/user-teams": {
+            "post": {
+                "summary": "Link user to team",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserTeamLink"
+                            }
+                        }
+                    }
+                },
+                "responses": { "200": { "description": "Linked" } }
+            },
+            "delete": {
+                "summary": "Unlink user from team",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserTeamLink"
+                            }
+                        }
+                    }
+                },
+                "responses": { "200": { "description": "Unlinked" } }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "UserCreate": {
+                "type": "object",
+                "properties": {
+                    "name": { "type": "string" },
+                    "email": { "type": "string" },
+                    "password": { "type": "string" }
+                },
+                "required": ["name", "email", "password"]
+            },
+            "UserLogin": {
+                "type": "object",
+                "properties": {
+                    "email": { "type": "string" },
+                    "password": { "type": "string" }
+                },
+                "required": ["email", "password"]
+            },
+            "AuthResponse": {
+                "type": "object",
+                "properties": {
+                    "token": { "type": "string" },
+                    "user": { "type": "object" }
+                }
+            },
+            "ProjectCreate": {
+                "type": "object",
+                "properties": {
+                    "name": { "type": "string" },
+                    "description": { "type": "string" }
+                },
+                "required": ["name"]
+            },
+            "ProjectUpdate": {
+                "type": "object",
+                "properties": {
+                    "name": { "type": "string" },
+                    "description": { "type": "string" },
+                    "progress": { "type": "string" }
+                }
+            },
+            "TaskCreate": {
+                "type": "object",
+                "properties": {
+                    "title": { "type": "string" },
+                    "description": { "type": "string" },
+                    "priority": { "type": "string" },
+                    "status": { "type": "string" },
+                    "projectId": { "type": "string" }
+                },
+                "required": ["title", "projectId"]
+            },
+            "TaskUpdate": {
+                "type": "object",
+                "properties": {
+                    "title": { "type": "string" },
+                    "description": { "type": "string" },
+                    "priority": { "type": "string" },
+                    "status": { "type": "string" }
+                }
+            },
+            "TeamCreate": {
+                "type": "object",
+                "properties": {
+                    "name": { "type": "string" },
+                    "description": { "type": "string" }
+                },
+                "required": ["name"]
+            },
+            "TeamUpdate": {
+                "type": "object",
+                "properties": {
+                    "name": { "type": "string" },
+                    "description": { "type": "string" }
+                }
+            },
+            "UserUpdate": {
+                "type": "object",
+                "properties": {
+                    "name": { "type": "string" },
+                    "email": { "type": "string" }
+                }
+            },
+            "UserProjectLink": {
+                "type": "object",
+                "properties": {
+                    "userId": { "type": "string" },
+                    "projectId": { "type": "string" }
+                },
+                "required": ["userId", "projectId"]
+            },
+            "UserTaskLink": {
+                "type": "object",
+                "properties": {
+                    "userId": { "type": "string" },
+                    "taskId": { "type": "string" }
+                },
+                "required": ["userId", "taskId"]
+            },
+            "UserTeamLink": {
+                "type": "object",
+                "properties": {
+                    "userId": { "type": "string" },
+                    "teamId": { "type": "string" }
+                },
+                "required": ["userId", "teamId"]
+            }
+        }
+    }
+}

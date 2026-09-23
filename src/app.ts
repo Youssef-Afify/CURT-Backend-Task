@@ -1,4 +1,7 @@
 import express, { Express } from "express";
+import swaggerUi from "swagger-ui-express";
+import * as fs from "fs";
+import * as path from "path";
 import { buildContainer } from "./api/composition/containers/container";
 import { authRoutes } from "./api/routes/auth.route";
 import { creatorRoutes } from "./api/routes/creator.route";
@@ -34,9 +37,21 @@ export function createApp(): Express {
     app.use("/tasks", taskRoutes(taskController, authMiddleware));
     app.use("/teams", teamRoutes(teamController, authMiddleware));
     app.use("/users", userRoutes(userController, authMiddleware));
-    app.use("/user-projects", userProjectRoutes(userProjectController, authMiddleware));
+    app.use(
+        "/user-projects",
+        userProjectRoutes(userProjectController, authMiddleware),
+    );
     app.use("/user-tasks", userTaskRoutes(userTaskController, authMiddleware));
     app.use("/user-teams", userTeamRoutes(userTeamController, authMiddleware));
+    // Serve API docs if openapi spec exists at project root
+    try {
+        const openapiPath = path.join(__dirname, "..", "openapi.json");
+        const specRaw = fs.readFileSync(openapiPath, "utf-8");
+        const spec = JSON.parse(specRaw);
+        app.use("/docs", swaggerUi.serve, swaggerUi.setup(spec));
+    } catch (err) {
+        // no-op: docs won't be available if openapi.json is missing
+    }
 
     app.use(errorMiddleware);
     return app;

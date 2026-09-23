@@ -1,43 +1,45 @@
 {
-  "name": "CURT-Backend-Task",
-  "version": "1.0.0",
-  "description": "CURT-Backend API - Node.js + Express + TypeScript + raw pg, Clean Architecture",
-  "main": "dist/server.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "tsx watch src/server.ts",
-    "build": "tsc",
-    "start": "node dist/server.js",
-    "typecheck": "tsc --noEmit",
-    "migrate": "node-pg-migrate"
-  },
-  "dependencies": {
-    "bcrypt": "^6.0.0",
-    "dotenv": "^16.4.5",
-    "express": "^4.19.2",
-    "jose": "^6.2.8",
-    "pg": "^8.12.0",
-    "winston": "^3.13.0",
-    "zod": "^3.23.8"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Youssef-Afify/CURT-Backend-Task.git"
-  },
-  "devDependencies": {
-    "@types/bcrypt": "^6.0.0",
-    "@types/express": "^4.17.21",
-    "@types/node": "^20.14.13",
-    "@types/pg": "^8.11.6",
-    "node-pg-migrate": "^7.6.1",
-    "tsx": "^4.16.2",
-    "typescript": "^5.5.4"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Youssef-Afify/CURT-Backend-Task/issues"
-  },
-  "homepage": "https://github.com/Youssef-Afify/CURT-Backend-Task#readme"
+    "name": "CURT-Backend-Task",
+    "version": "1.0.0",
+    "description": "CURT-Backend API - Node.js + Express + TypeScript + raw pg, Clean Architecture",
+    "main": "dist/server.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "dev": "tsx watch src/server.ts",
+        "build": "tsc",
+        "start": "node dist/server.js",
+        "typecheck": "tsc --noEmit",
+        "migrate": "node-pg-migrate"
+    },
+    "dependencies": {
+        "bcrypt": "^6.0.0",
+        "dotenv": "^16.4.5",
+        "express": "^4.19.2",
+        "jose": "^6.2.8",
+        "pg": "^8.12.0",
+        "swagger-ui-express": "^4.6.3",
+        "winston": "^3.13.0",
+        "zod": "^3.23.8"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Youssef-Afify/CURT-Backend-Task.git"
+    },
+    "devDependencies": {
+        "@types/bcrypt": "^6.0.0",
+        "@types/express": "^4.17.21",
+        "@types/node": "^20.14.13",
+        "@types/pg": "^8.11.6",
+        "@types/swagger-ui-express": "^4.1.8",
+        "node-pg-migrate": "^7.6.1",
+        "tsx": "^4.16.2",
+        "typescript": "^5.5.4"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/Youssef-Afify/CURT-Backend-Task/issues"
+    },
+    "homepage": "https://github.com/Youssef-Afify/CURT-Backend-Task#readme"
 }
