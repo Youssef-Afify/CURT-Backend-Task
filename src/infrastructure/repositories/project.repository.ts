@@ -18,6 +18,12 @@ export class ProjectRepository
             RETURNING project_id, name, description, progress, created_at, updated_at, creator_id`,
             [data.name, data.description, data.creatorId],
         );
+
+        await this.query<{}>(
+            `INSERT INTO user_projects
+            VALUES ($1, $2)`,
+            [data.creatorId, rows[0].project_id],
+        );
         return Project.toEntity(rows[0]);
     }
 

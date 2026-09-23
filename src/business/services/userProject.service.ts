@@ -32,4 +32,9 @@ export class UserProjectService implements IUserProjectService {
             );
         }
     }
+
+    async isUserProject(userId: string, projectId: string): Promise<boolean> {
+        const result = await this.userProjectRepository.isUserProject(userId, projectId);
+        return result;
+    }
 }

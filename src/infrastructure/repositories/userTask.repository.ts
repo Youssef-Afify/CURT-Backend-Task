@@ -30,4 +30,14 @@ export class UserTaskRepository
         );
         return result.length > 0;
     }
+
+    async isUserTask(userId: string, taskId: string): Promise<boolean> {
+        const rows = await this.query<UserTask>(
+            `SELECT user_id, task_id FROM user_tasks
+            WHERE user_id = $1 AND task_id = $2
+            RETURNING user_id, task_id`,
+            [userId, taskId],
+        );
+        return rows[0] ? true : false;
+    }
 }

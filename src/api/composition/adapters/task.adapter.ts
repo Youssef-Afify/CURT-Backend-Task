@@ -1,5 +1,7 @@
+import { ProjectService } from "../../../business/services/project.service";
 import { TaskService } from "../../../business/services/task.service";
 import {
+    IsProjectCreatorPort,
     TaskByProjectPort,
     TaskByUserPort,
     TaskSummary,
@@ -38,5 +40,14 @@ export class TaskForUserAdapter implements TaskByUserPort {
             updated_at: task.updatedAt,
             project_id: task.projectId,
         }));
+    }
+}
+
+export class IsProjectCreatorAdapter implements IsProjectCreatorPort {
+    constructor(private readonly projectService: ProjectService) {}
+
+    async isProjectCreator(projectId: string, userId: string): Promise<boolean> {
+        const result = await this.projectService.isProjectCreator(projectId, userId);
+        return result;
     }
 }

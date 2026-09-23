@@ -4,4 +4,5 @@ import { UserTask } from "../entities/userTask.entity";
 export interface IUserTaskService {
     create(dto: CreateUserTaskDto): Promise<UserTask>;
     delete(dto: DeleteUserTaskDto): Promise<void>;
+    isUserTask(userId: string, taskId: string): Promise<boolean>;
 }

@@ -32,4 +32,9 @@ export class UserTeamService implements IUserTeamService {
             );
         }
     }
+
+    async isUserTeam(userId: string, teamId: string): Promise<boolean> {
+        const result = await this.userTeamRepository.isUserTeam(userId, teamId);
+        return result;
+    }
 }

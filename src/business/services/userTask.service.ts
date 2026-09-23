@@ -32,4 +32,9 @@ export class UserTaskService implements IUserTaskService {
             );
         }
     }
+
+    async isUserTask(userId: string, taskId: string): Promise<boolean> {
+        const result = await this.userTaskRepository.isUserTask(userId, taskId);
+        return result;
+    }
 }

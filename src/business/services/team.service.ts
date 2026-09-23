@@ -65,13 +65,30 @@ export class TeamService implements ITeamService {
     }
 
     async getAllByUserId(userId: string): Promise<Team[]> {
+        const currentUserId = requireCurrentUserId();
+        if (currentUserId !== userId) {
+            throw new ForbiddenError("You can't see teams of another user");
+        }
         const userTeams = await this.teamRepository.getAllByUserId(userId);
         return userTeams;
     }
 
     async getAllByCreatorId(creatorId: string): Promise<Team[]> {
+        const currentCreatorId = requireCurrentUserId();
+        if (currentCreatorId !== creatorId) {
+            throw new ForbiddenError("You can't see teams of another creator");
+        }
         const creatorTeams =
             await this.teamRepository.getAllByCreatorId(creatorId);
         return creatorTeams;
+    }
+
+    async isTeamCreator(teamId: string, userId: string): Promise<boolean> {
+        const team = await this.teamRepository.getById(teamId);
+        if (!team) {
+            this.logger.error(`Team ${teamId} not found`);
+            throw new NotFoundError(`Team ${teamId} not found`);
+        }
+        return team.creatorId == userId;
     }
 }

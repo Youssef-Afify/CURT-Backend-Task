@@ -15,6 +15,12 @@ export class TeamRepository extends BaseRepository implements ITeamRepository {
             RETURNING team_id, name, description, "timestamp", creator_id`,
             [data.name, data.description, data.creatorId],
         );
+
+        await this.query<{}>(
+            `INSERT INTO user_teams
+            VALUES ($1, $2)`,
+            [data.creatorId, rows[0].team_id],
+        );
         return Team.toEntity(rows[0]);
     }
 

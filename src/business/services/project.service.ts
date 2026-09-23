@@ -1,7 +1,4 @@
-import {
-    CreateProjectDto,
-    UpdateProjectDto,
-} from "../../core/dtos/project.dto";
+import { CreateProjectDto, UpdateProjectDto } from "../../core/dtos/project.dto";
 import { Project } from "../../core/entities/project.entity";
 import { ForbiddenError, NotFoundError } from "../../core/errors/appError";
 import { IBaseLogger } from "../../core/iLoggers/iBaseLogger";
@@ -73,14 +70,31 @@ export class ProjectService implements IProjectService {
     }
 
     async getAllByUserId(userId: string): Promise<Project[]> {
+        const currentUserId = requireCurrentUserId();
+        if (currentUserId !== userId) {
+            throw new ForbiddenError("You can't see projects of another user");
+        }
         const userProjects =
             await this.projectRepository.getAllByUserId(userId);
         return userProjects;
     }
 
     async getAllByCreatorId(creatorId: string): Promise<Project[]> {
+        const currentCreatorId = requireCurrentUserId();
+        if (currentCreatorId !== creatorId) {
+            throw new ForbiddenError("You can't see projects of another creator");
+        }
         const creatorProjects =
             await this.projectRepository.getAllByCreatorId(creatorId);
         return creatorProjects;
+    }
+
+    async isProjectCreator(projectId: string, userId: string): Promise<boolean> {
+        const project = await this.projectRepository.getById(projectId);
+        if (!project) {
+            this.logger.error(`Project ${projectId} not found`);
+            throw new NotFoundError(`Project ${projectId} not found`);
+        }
+        return project.creatorId == userId;
     }
 }

@@ -19,3 +19,7 @@ export interface TaskByUserPort {
 export interface TaskByProjectPort {
     getTasksForProject(projectId: string): Promise<TaskSummary>;
 }
+
+export interface IsProjectCreatorPort {
+    isProjectCreator(projectId: string, userId: string): Promise<boolean>;
+}
