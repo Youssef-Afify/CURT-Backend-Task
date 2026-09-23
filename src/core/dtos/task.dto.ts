@@ -13,6 +13,6 @@ export const UpdateTaskSchema = z.object({
     description: z.string().max(500).optional(),
     priority: z.enum(["Low", "Medium", "High"]).optional(),
     status: z.enum(["To Do", "In Progress", "Done"]).optional(),
-    projectId: z.string().uuid(),
+    projectId: z.string().uuid().optional(),
 });
 export type UpdateTaskDto = z.infer<typeof UpdateTaskSchema>;
