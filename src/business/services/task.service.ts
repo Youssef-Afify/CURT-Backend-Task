@@ -13,8 +13,8 @@ export class TaskService implements ITaskService {
     constructor(
         private readonly taskRepository: ITaskRepository,
         private readonly isProjectCreatorPort: IsProjectCreatorPort,
-        private readonly isUserTaskPort: IsUserTaskPort,
         private readonly isUserProjectPort: IsUserProjectPort,
+        private readonly isUserTaskPort: IsUserTaskPort,
         private readonly logger: IBaseLogger,
     ) {}
 

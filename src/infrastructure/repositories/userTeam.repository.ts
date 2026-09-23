@@ -34,8 +34,7 @@ export class UserTeamRepository
     async isUserTeam(userId: string, teamId: string): Promise<boolean> {
         const rows = await this.query<UserTeam>(
             `SELECT user_id, team_id FROM user_teams
-            WHERE user_id = $1 AND team_id = $2
-            RETURNING user_id, team_id`,
+            WHERE user_id = $1 AND team_id = $2`,
             [userId, teamId],
         );
         return rows[0] ? true : false;

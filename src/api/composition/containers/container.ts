@@ -1,4 +1,3 @@
-import { UserProjectController } from "../../controllers/userProject.controller";
 import { AuthMiddleware } from "../../middlewares/authMiddleware";
 import { buildAuthContainer } from "./auth.container";
 import { buildCreatorContainer } from "./creator.container";
